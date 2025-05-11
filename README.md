@@ -9,6 +9,9 @@
     <img src="https://img.shields.io/badge/python-3.13-green" alt="python-version">
 </p>
 
+> [!WARNING]
+> The library is in the alpha stage. Bugs may exist!
+
 ## License
 
 MIT License, Copyright (c) 2025 Sergei Y. Bogdanov. See [LICENSE][github/license] file.
