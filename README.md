@@ -10,7 +10,7 @@
 </p>
 
 > [!WARNING]
-> The library is in the pre-alpha stage. Bugs may exist!
+> The project is in the pre-alpha stage. Bugs may exist!
 
 ## License
 
