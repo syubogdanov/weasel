@@ -1,21 +1,22 @@
 # Credits Section
 
-| Name                  | Author                               | Web-Service                | License                          |
-|-----------------------|--------------------------------------|----------------------------|----------------------------------|
-| [Weasel Icon][01]     | [@freepik][02]                       | [Flaticon][03]             | [Flaticon][04]                   |
-| [Code of Conduct][05] | [Coraline Ada Ehmke][06]             | [Contributor Covenant][07] | [CC BY 4.0][08]                  |
-| [GNU Make][09]        | [Free Software Foundation, Inc.][10] | [GNU][11]                  | [GNU General Public License][12] |
-| [cpython][13]         | [@python][14]                        | [GitHub][15]               | [PSF License][16]                |
-| [poetry][17]          | [@python-poetry][18]                 | [GitHub][19]               | [MIT][20]                        |
-| [black][21]           | [@psf][22]                           | [GitHub][23]               | [MIT][24]                        |
-| [mypy][25]            | [@python][26]                        | [GitHub][27]               | [MIT][28]                        |
-| [ruff][29]            | [@astral-sh][30]                     | [GitHub][31]               | [MIT][32]                        |
-| [pytest][33]          | [@pytest-dev][34]                    | [GitHub][35]               | [MIT][36]                        |
-| [pytest-asyncio][37]  | [@pytest-dev][38]                    | [GitHub][39]               | [Apache-2.0][40]                 |
-| [pydantic][41]        | [@pydantic][42]                      | [GitHub][43]               | [MIT][44]                        |
-| [Docker][45]          | [Docker Inc.][46]                    | [Docker][47]               | [Docker Personal][48]            |
-| [shields][49]         | [badges][50]                         | [GitHub][51]               | [CC0-1.0][52]                    |
-| [RapidFuzz][53]       | [rapidfuzz][54]                      | [GitHub][55]               | [MIT][56]                        |
+| Name                             | Author                               | Web-Service                | License                          |
+|----------------------------------|--------------------------------------|----------------------------|----------------------------------|
+| [Weasel Icon][01]                | [@freepik][02]                       | [Flaticon][03]             | [Flaticon][04]                   |
+| [Code of Conduct][05]            | [Coraline Ada Ehmke][06]             | [Contributor Covenant][07] | [CC BY 4.0][08]                  |
+| [GNU Make][09]                   | [Free Software Foundation, Inc.][10] | [GNU][11]                  | [GNU General Public License][12] |
+| [cpython][13]                    | [@python][14]                        | [GitHub][15]               | [PSF License][16]                |
+| [poetry][17]                     | [@python-poetry][18]                 | [GitHub][19]               | [MIT][20]                        |
+| [black][21]                      | [@psf][22]                           | [GitHub][23]               | [MIT][24]                        |
+| [mypy][25]                       | [@python][26]                        | [GitHub][27]               | [MIT][28]                        |
+| [ruff][29]                       | [@astral-sh][30]                     | [GitHub][31]               | [MIT][32]                        |
+| [pytest][33]                     | [@pytest-dev][34]                    | [GitHub][35]               | [MIT][36]                        |
+| [pytest-asyncio][37]             | [@pytest-dev][38]                    | [GitHub][39]               | [Apache-2.0][40]                 |
+| [pydantic][41]                   | [@pydantic][42]                      | [GitHub][43]               | [MIT][44]                        |
+| [Docker][45]                     | [Docker Inc.][46]                    | [Docker][47]               | [Docker Personal][48]            |
+| [shields][49]                    | [badges][50]                         | [GitHub][51]               | [CC0-1.0][52]                    |
+| [RapidFuzz][53]                  | [rapidfuzz][54]                      | [GitHub][55]               | [MIT][56]                        |
+| [python-dependency-injector][57] | [@ets-labs][58]                      | [GitHub][59]               | [BSD-3-Clause][60]               |
 
 [01]: https://www.flaticon.com/free-icon/weasel_334982
 [02]: https://www.flaticon.com/authors/freepik
@@ -86,3 +87,8 @@
 [54]: https://github.com/rapidfuzz
 [55]: https://github.com/
 [56]: https://github.com/rapidfuzz/RapidFuzz/blob/main/LICENSE
+
+[57]: https://github.com/ets-labs/python-dependency-injector
+[58]: https://github.com/ets-labs
+[59]: https://github.com/
+[60]: https://github.com/ets-labs/python-dependency-injector/blob/master/LICENSE.rst
