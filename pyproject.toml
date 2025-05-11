@@ -82,6 +82,7 @@ disable_error_code = [
 ]
 
 [tool.pytest.ini_options]
+addopts = "--cov=weasel --cov-report=xml"
 asyncio_mode = "auto"
 
 [tool.ruff]
