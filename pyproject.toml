@@ -1,0 +1,117 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "weasel"
+version = "0.0.0"
+description = "..."
+license = "MIT"
+authors = ["Sergei Y. Bogdanov <syubogdanov@outlook.com>"]
+maintainers = ["Sergei Y. Bogdanov <syubogdanov@outlook.com>"]
+readme = "README.md"
+homepage = "https://github.com/syubogdanov/weasel"
+repository = "https://github.com/syubogdanov/weasel"
+documentation = "https://weasel.readthedocs.io"
+keywords = [
+    "...",
+    "...",
+    "...",
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Education",
+    "Topic :: Utilities",
+]
+package-mode = true
+
+[tool.poetry.dependencies]
+pydantic = "~2.11"
+python = "~3.13"
+
+[tool.poetry.group.lint]
+optional = true
+
+[tool.poetry.group.lint.dependencies]
+black = "~25.1"
+mypy = "~1.15"
+ruff = "~0.11"
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "~8.3"
+pytest-asyncio = "~0.26"
+
+[tool.black]
+line-length = 100
+target-version = ["py313"]
+skip-magic-trailing-comma = true
+
+[tool.mypy]
+allow_redefinition = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+explicit_package_bases = true
+ignore_missing_imports = true
+no_implicit_optional = true
+plugins = [
+    "pydantic.mypy",
+]
+python_version = "3.13"
+strict_equality = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disable_error_code = [
+    "attr-defined",
+    "method-assign",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.ruff]
+indent-width = 4
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+ignore = [
+    "COM812",  # Checks for the absence of trailing commas.
+    "D100",    # Missing docstring in public module.
+    "D104",    # Missing docstring in public package.
+]
+select = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"functional_tests/**/*.py" = [
+    "S101",    # Checks for uses of the `assert` keyword.
+]
+"migrations/env.py" = [
+    "F403",    # Checks for the use of wildcard imports.
+]
+"tests/**/*.py" = [
+    "S101",    # Checks for uses of the `assert` keyword.
+    "SLF001",  # Checks for accesses on "private" class members.
+]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+lines-between-types = 1
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
