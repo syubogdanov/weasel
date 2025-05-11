@@ -176,3 +176,6 @@ cython_debug/
 # Weasel
 .tmp
 .tmp/
+
+# Visual Studio Code
+.vscode/
