@@ -4,9 +4,9 @@
 </h2>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/version-0.0.0--alpha-green"alt="weasel-version">
-    <img src="https://img.shields.io/badge/python-3.13-green" alt="python-version">
+    <img src="https://img.shields.io/badge/version-0.0.0-green"alt="weasel-version">
     <img src="https://img.shields.io/badge/license-MIT-green" alt="license">
+    <img src="https://img.shields.io/badge/python-3.13-green" alt="python-version">
 </p>
 
 ## License
