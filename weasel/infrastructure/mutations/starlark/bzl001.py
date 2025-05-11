@@ -13,10 +13,6 @@ class StarlarkMutation(PythonMutation):
     * Concatenates space-delimited strings;
     * Removes comments (`#`).
 
-    Notes
-    -----
-    * This mutation is not thread-safe.
-
     See Also
     --------
     * `PY001`.
