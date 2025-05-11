@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from weasel.infrastructure.mutations.python.py001 import PythonMutation
 
 
-@dataclass(slots=True)
+@dataclass
 class StarlarkMutation(PythonMutation):
     """The *Starlark* mutation (`BZL001`).
 

@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from weasel.domain.services.interfaces.mutation import MutationInterface
 
 
-@dataclass(slots=True)
+@dataclass
 class PythonMutation(MutationInterface):
     """The *Python* mutation (`PY002`).
 
@@ -28,7 +28,7 @@ class PythonMutation(MutationInterface):
         return ast.unparse(tree)
 
 
-@dataclass(slots=True)
+@dataclass
 class PythonTransformer(ast.NodeTransformer):
     """The AST transformer.
 

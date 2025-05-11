@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from weasel.domain.services.interfaces.mutation import MutationInterface
 
 
-@dataclass(slots=True)
+@dataclass
 class PythonMutation(MutationInterface):
     """The *Python* mutation (`P001`).
 

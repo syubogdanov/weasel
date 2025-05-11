@@ -5,7 +5,7 @@ from rapidfuzz.distance.DamerauLevenshtein import normalized_similarity
 from weasel.domain.services.interfaces.estimator import EstimatorInterface
 
 
-@dataclass(slots=True)
+@dataclass
 class DamerauLevenshteinEstimator(EstimatorInterface):
     """The Damerau-Levenshtein estimator."""
 
