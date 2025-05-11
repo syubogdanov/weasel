@@ -1,8 +1,11 @@
+from dataclasses import dataclass
+
 from rapidfuzz.distance.JaroWinkler import normalized_similarity
 
 from weasel.domain.services.interfaces.estimator import EstimatorInterface
 
 
+@dataclass(slots=True)
 class JaroWinklerEstimator(EstimatorInterface):
     """The Jaro-Winkler estimator."""
 

@@ -1,8 +1,11 @@
+from dataclasses import dataclass
+
 from rapidfuzz.distance.Levenshtein import normalized_similarity
 
 from weasel.domain.services.interfaces.estimator import EstimatorInterface
 
 
+@dataclass(slots=True)
 class LevenshteinEstimator(EstimatorInterface):
     """The Levenshtein estimator."""
 
