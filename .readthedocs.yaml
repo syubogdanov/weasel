@@ -1,0 +1,11 @@
+version: 2
+build:
+  os: ubuntu-24.04
+  tools:
+    python: latest
+python:
+  install:
+    - requirements: docs/requirements.txt
+sphinx:
+  configuration: docs/configuration.py
+  fail_on_warning: true
