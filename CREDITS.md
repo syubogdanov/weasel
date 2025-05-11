@@ -13,6 +13,7 @@
 | [pytest][33]          | [@pytest-dev][34]                    | [GitHub][35]               | [MIT][36]                        |
 | [pytest-asyncio][37]  | [@pytest-dev][38]                    | [GitHub][39]               | [Apache-2.0][40]                 |
 | [pydantic][41]        | [@pydantic][42]                      | [GitHub][43]               | [MIT][44]                        |
+| [Docker][45]          | [Docker Inc.][46]                    | [Docker][47]               | [Docker Personal][48]            |
 
 [01]: https://www.flaticon.com/free-icon/weasel_334982
 [02]: https://www.flaticon.com/authors/freepik
@@ -68,3 +69,8 @@
 [42]: https://github.com/pydantic
 [43]: https://github.com/
 [44]: https://github.com/pydantic/pydantic/blob/main/LICENSE
+
+[45]: https://www.docker.com/
+[46]: https://www.docker.com/company
+[47]: https://www.docker.com/
+[48]: https://www.docker.com/products/personal
