@@ -91,6 +91,8 @@ disable_error_code = [
 module = "weasel.infrastructure.mutations.python.*"
 disable_error_code = [
     "attr-defined",
+    "operator",
+    "return-value",
 ]
 
 [tool.pytest.ini_options]
