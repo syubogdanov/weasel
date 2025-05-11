@@ -87,6 +87,12 @@ disable_error_code = [
     "method-assign",
 ]
 
+[[tool.mypy.overrides]]
+module = "weasel.infrastructure.mutations.python.*"
+disable_error_code = [
+    "attr-defined",
+]
+
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "session"
 asyncio_mode = "auto"
@@ -116,6 +122,26 @@ select = ["ALL"]
 [tool.ruff.lint.isort]
 lines-after-imports = 2
 lines-between-types = 1
+
+[tool.ruff.lint.pep8-naming]
+extend-ignore-names = [
+    "visit_AsyncFor",
+    "visit_AsyncFunctionDef",
+    "visit_AsyncWith",
+    "visit_BinOp",
+    "visit_BoolOp",
+    "visit_ClassDef",
+    "visit_ExceptHandler",
+    "visit_For",
+    "visit_FunctionDef",
+    "visit_If",
+    "visit_Module",
+    "visit_Try",
+    "visit_TryStar",
+    "visit_UnaryOp",
+    "visit_While",
+    "visit_With",
+]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
