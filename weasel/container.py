@@ -8,7 +8,7 @@ from weasel.infrastructure.estimators.jaro_winkler import JaroWinklerEstimator
 from weasel.infrastructure.estimators.levenshtein import LevenshteinEstimator
 from weasel.infrastructure.mutations.python import py001, py002, py003, py004, py005, py006
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
-from weasel.settings import WeaselSettings
+from weasel.settings.weasel import WeaselSettings
 
 
 if TYPE_CHECKING:
