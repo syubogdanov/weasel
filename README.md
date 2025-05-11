@@ -3,11 +3,12 @@
         alt="weasel-logo" height="128px" width="128px">
 </h2>
 
-<p align="center">
-    <img src="https://img.shields.io/badge/version-0.0.0-green"alt="weasel-version">
-    <img src="https://img.shields.io/badge/license-MIT-green" alt="license">
-    <img src="https://img.shields.io/badge/python-3.13-green" alt="python-version">
-</p>
+[![weasel-version][shields/weasel/version]][github/homepage]
+[![weasel-license][shields/github/license]][github/license]
+[![python-version][shields/python/version]][github/homepage]
+[![weasel-stars][shields/github/stars]][github/homepage]
+[![weasel-forks][shields/github/forks]][github/homepage]
+[![weasel-contributors][shields/github/contributors]][github/homepage]
 
 > [!WARNING]
 > The project is in the pre-alpha stage. Bugs may exist!
@@ -18,4 +19,12 @@ MIT License, Copyright (c) 2025 Sergei Y. Bogdanov. See [LICENSE][github/license
 
 <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
 
+[github/homepage]: https://github.com/syubogdanov/weasel
 [github/license]: https://github.com/syubogdanov/weasel/tree/main/LICENSE
+
+[shields/github/contributors]: https://img.shields.io/github/contributors/syubogdanov/weasel?style=flat&color=green
+[shields/github/forks]: https://img.shields.io/github/forks/syubogdanov/weasel?style=flat&color=green
+[shields/github/license]: https://img.shields.io/github/license/syubogdanov/weasel?style=flat&color=green
+[shields/github/stars]: https://img.shields.io/github/stars/syubogdanov/weasel?style=flat&color=green
+[shields/python/version]: https://img.shields.io/badge/python-3.13-green
+[shields/weasel/version]: https://img.shields.io/badge/version-0.0.0-green
