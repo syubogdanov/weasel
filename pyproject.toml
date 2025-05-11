@@ -87,6 +87,7 @@ disable_error_code = [
 ]
 
 [tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "session"
 asyncio_mode = "auto"
 
 [tool.ruff]
@@ -103,11 +104,8 @@ ignore = [
 select = ["ALL"]
 
 [tool.ruff.lint.per-file-ignores]
-"functional_tests/**/*.py" = [
-    "S101",    # Checks for uses of the `assert` keyword.
-]
-"migrations/env.py" = [
-    "F403",    # Checks for the use of wildcard imports.
+"docs/**/*.py" = [
+    "A001",    # Checks for variable (and function) assignments that use the same names as builtins.
 ]
 "tests/**/*.py" = [
     "S101",    # Checks for uses of the `assert` keyword.
