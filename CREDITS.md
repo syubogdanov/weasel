@@ -17,6 +17,7 @@
 | [shields][49]                    | [badges][50]                         | [GitHub][51]               | [CC0-1.0][52]                    |
 | [RapidFuzz][53]                  | [rapidfuzz][54]                      | [GitHub][55]               | [MIT][56]                        |
 | [python-dependency-injector][57] | [@ets-labs][58]                      | [GitHub][59]               | [BSD-3-Clause][60]               |
+| [networkx][61]                   | [@networkx][62]                      | [GitHub][63]               | [BSD-3-Clause][64]               |
 
 [01]: https://www.flaticon.com/free-icon/weasel_334982
 [02]: https://www.flaticon.com/authors/freepik
@@ -92,3 +93,8 @@
 [58]: https://github.com/ets-labs
 [59]: https://github.com/
 [60]: https://github.com/ets-labs/python-dependency-injector/blob/master/LICENSE.rst
+
+[61]: https://github.com/networkx/networkx
+[62]: https://github.com/networkx
+[63]: https://github.com/
+[64]: https://github.com/networkx/networkx/blob/main/LICENSE.txt
