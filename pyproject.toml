@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "weasel"
 version = "0.0.0"
-description = "..."
+description = "Binary-blooded predator. Hunts plagiarism - line by line, byte by byte."
 license = "MIT"
 authors = ["Sergei Y. Bogdanov <syubogdanov@outlook.com>"]
 maintainers = ["Sergei Y. Bogdanov <syubogdanov@outlook.com>"]
@@ -14,9 +14,13 @@ homepage = "https://github.com/syubogdanov/weasel"
 repository = "https://github.com/syubogdanov/weasel"
 documentation = "https://weasel.readthedocs.io"
 keywords = [
-    "...",
-    "...",
-    "...",
+    "ast",
+    "cli",
+    "education",
+    "plagiarism",
+    "python",
+    "sql",
+    "starlark",
 ]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
