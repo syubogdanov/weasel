@@ -2,7 +2,7 @@ VENV = poetry run
 
 
 # CI/CD
-cicd: format lint unit-tests
+cicd: format lint test
 
 
 # Formatters
