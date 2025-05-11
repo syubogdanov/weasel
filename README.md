@@ -13,6 +13,6 @@
 
 MIT License, Copyright (c) 2025 Sergei Y. Bogdanov. See [LICENSE][github/license] file.
 
-<!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+<!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
 
 [github/license]: https://github.com/syubogdanov/weasel/tree/main/LICENSE
