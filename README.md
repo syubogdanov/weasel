@@ -7,6 +7,7 @@
 [![weasel-license][shields/github/license]][github/license]
 [![python-version][shields/python/version]][github/homepage]
 [![python-coverage][shields/python/coverage]][github/homepage]
+[![weasel-readthedocs][shields/readthedocs]][readthedocs/homepage]
 [![github-stars][shields/github/stars]][github/homepage]
 [![github-forks][shields/github/forks]][github/homepage]
 [![github-contributors][shields/github/contributors]][github/homepage]
@@ -25,6 +26,8 @@ MIT License, Copyright (c) 2025 Sergei Y. Bogdanov. See [LICENSE][github/license
 [github/homepage]: https://github.com/syubogdanov/weasel
 [github/license]: https://github.com/syubogdanov/weasel/tree/main/LICENSE
 
+[readthedocs/homepage]: https://weasel.readthedocs.io/
+
 [shields/github/contributors]: https://img.shields.io/github/contributors/syubogdanov/weasel?style=flat&color=green
 [shields/github/forks]: https://img.shields.io/github/forks/syubogdanov/weasel?style=flat&color=green
 [shields/github/issues]: https://img.shields.io/github/issues/syubogdanov/weasel?style=flat&color=green
@@ -33,4 +36,5 @@ MIT License, Copyright (c) 2025 Sergei Y. Bogdanov. See [LICENSE][github/license
 [shields/github/stars]: https://img.shields.io/github/stars/syubogdanov/weasel?style=flat&color=green
 [shields/python/coverage]: https://img.shields.io/coverallsCoverage/github/syubogdanov/weasel?style=flat&color=green
 [shields/python/version]: https://img.shields.io/badge/python-3.13-green
+[shields/readthedocs]: https://img.shields.io/readthedocs/weasel?style=flat&color=green
 [shields/weasel/version]: https://img.shields.io/badge/version-0.0.0-green
