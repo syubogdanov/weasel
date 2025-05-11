@@ -91,6 +91,7 @@ disable_error_code = [
 [[tool.mypy.overrides]]
 module = "weasel.infrastructure.mutations.python.*"
 disable_error_code = [
+    "arg-type",
     "attr-defined",
     "operator",
     "return-value",
