@@ -14,7 +14,8 @@ class PythonMutation(MutationInterface):
     * Removes unused constants.
     """
 
-    def mutate(self, source: str, target: str) -> str:  # noqa: ARG002
+    @classmethod
+    def mutate(cls, source: str, target: str) -> str:  # noqa: ARG003
         """Mutate `source` using `target` as the reference."""
         tree = ast.parse(source)
 

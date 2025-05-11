@@ -16,7 +16,8 @@ class PythonMutation(MutationInterface):
     * Removes comments (`#`).
     """
 
-    def mutate(self, source: str, target: str) -> str:  # noqa: ARG002
+    @classmethod
+    def mutate(cls, source: str, target: str) -> str:  # noqa: ARG003
         """Mutate `source` using `target` as the reference."""
         mutated = ast.unparse(ast.parse(source))
         return mutated if mutated != source else source
