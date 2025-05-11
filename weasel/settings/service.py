@@ -11,8 +11,8 @@ class EstimatorType(StrEnum):
     LEVENSHTEIN = auto()
 
 
-class WeaselSettings(BaseModel):
-    """The *Weasel* settings.
+class ServiceSettings(BaseModel):
+    """The service settings.
 
     Notes
     -----
