@@ -15,6 +15,7 @@
 | [pydantic][41]        | [@pydantic][42]                      | [GitHub][43]               | [MIT][44]                        |
 | [Docker][45]          | [Docker Inc.][46]                    | [Docker][47]               | [Docker Personal][48]            |
 | [shields][49]         | [badges][50]                         | [GitHub][51]               | [CC0-1.0][52]                    |
+| [RapidFuzz][53]       | [rapidfuzz][54]                      | [GitHub][55]               | [MIT][56]                        |
 
 [01]: https://www.flaticon.com/free-icon/weasel_334982
 [02]: https://www.flaticon.com/authors/freepik
@@ -80,3 +81,8 @@
 [50]: https://github.com/badges
 [51]: https://github.com/
 [52]: https://github.com/badges/shields/blob/master/LICENSE
+
+[53]: https://github.com/rapidfuzz/RapidFuzz
+[54]: https://github.com/rapidfuzz
+[55]: https://github.com/
+[56]: https://github.com/rapidfuzz/RapidFuzz/blob/main/LICENSE
