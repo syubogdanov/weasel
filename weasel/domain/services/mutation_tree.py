@@ -54,7 +54,12 @@ class MutationTree:
 
 @dataclass
 class DFSOptions:
-    """The DFS options."""
+    """The DFS options.
+
+    Notes
+    -----
+    * Consider this class as a private one.
+    """
 
     mutations: list["MutationInterface"]
     score: float
