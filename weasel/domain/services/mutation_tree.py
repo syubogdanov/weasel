@@ -40,7 +40,7 @@ class MutationTree:
 
         optimums: list[DFSOptions] = []
 
-        for mutation, score in nlargest(self._degree_of_freedom, scores, key=lambda x: x[1]):
+        for mutation, score in nlargest(self._degree_of_freedom, scores, key=lambda p: p[1]):
             mutated = mutation.mutate(source, target)
 
             next_mutations = [*options.mutations, mutation]
