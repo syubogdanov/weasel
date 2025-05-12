@@ -1,12 +1,14 @@
 from typing import TYPE_CHECKING
+from uuid import UUID, uuid4
 
 from dependency_injector.containers import DeclarativeContainer
-from dependency_injector.providers import List, Provider, Selector, Singleton
+from dependency_injector.providers import Factory, List, Provider, Selector, Singleton
 
 from weasel.domain.services.mutation_tree import MutationTree
 from weasel.infrastructure.adapters.cache import CacheAdapter
 from weasel.infrastructure.adapters.cashews.cache import CacheCashewsAdapter
 from weasel.infrastructure.adapters.hash import HashAdapter
+from weasel.infrastructure.adapters.sealer import SealerAdapter
 from weasel.infrastructure.estimators.damerau_levenshtein import DamerauLevenshteinEstimator
 from weasel.infrastructure.estimators.jaro_winkler import JaroWinklerEstimator
 from weasel.infrastructure.estimators.levenshtein import LevenshteinEstimator
@@ -33,6 +35,7 @@ if TYPE_CHECKING:
     from weasel.domain.services.interfaces.hash import HashInterface
     from weasel.domain.services.interfaces.language import LanguageInterface
     from weasel.domain.services.interfaces.mutation import MutationInterface
+    from weasel.domain.services.interfaces.sealer import SealerInterface
 
 
 class WeaselContainer(DeclarativeContainer):
@@ -48,15 +51,22 @@ class WeaselContainer(DeclarativeContainer):
     retries_settings: Provider["RetriesSettings"] = Singleton(RetriesSettings)
     system_settings: Provider["SystemSettings"] = Singleton(SystemSettings)
 
-    hash_adapter: Provider["HashInterface"] = Singleton(
-        HashAdapter, _max_threads=system_settings.provided.workers
-    )
+    id_factory: Provider[UUID] = Factory(uuid4)
 
     cache_cashews_adapter: Provider["CacheCashewsAdapter"] = Singleton(
         CacheCashewsAdapter, _settings=cache_settings.provided
     )
+
     cache_adapter: Provider["CacheAdapter"] = Singleton(
         CacheAdapter, _cashews=cache_cashews_adapter.provided
+    )
+    hash_adapter: Provider["HashInterface"] = Singleton(
+        HashAdapter, _max_threads=system_settings.provided.workers
+    )
+    sealer_adapter: Provider["SealerInterface"] = Singleton(
+        SealerAdapter,
+        _data_dir=service_settings.provided.data_directory,
+        _id_factory=id_factory.provider,
     )
 
     bitbucket_adapter: Provider["GitInterface"] = Singleton(

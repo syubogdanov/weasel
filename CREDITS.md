@@ -24,6 +24,8 @@
 | [tenacity][77]                   | [@jd][78]                            | [GitHub][79]               | [Apache-2.0][80]                 |
 | [platformdirs][81]               | [@tox-dev][82]                       | [GitHub][83]               | [MIT][84]                        |
 | [blake3-py][85]                  | [@oconnor663][86]                    | [GitHub][87]               | [CC0-1.0][88]                    |
+| [aioshutil][89]                  | [@kumaraditya303][90]                | [GitHub][91]               | [BSD-3-Clause][92]               |
+| [aiostdlib][93]                  | [@syubogdanov][94]                   | [GitHub][95]               | [MIT][96]                        |
 
 [01]: https://www.flaticon.com/free-icon/weasel_334982
 [02]: https://www.flaticon.com/authors/freepik
@@ -134,3 +136,13 @@
 [86]: https://github.com/oconnor663
 [87]: https://github.com/
 [88]: https://github.com/oconnor663/blake3-py/blob/master/LICENSE
+
+[89]: https://github.com/kumaraditya303/aioshutil
+[90]: https://github.com/kumaraditya303
+[91]: https://github.com/
+[92]: https://github.com/kumaraditya303/aioshutil/blob/master/LICENSE.md
+
+[93]: https://github.com/syubogdanov/aiostdlib
+[94]: https://github.com/syubogdanov
+[95]: https://github.com/
+[96]: https://github.com/syubogdanov/aiostdlib/blob/main/LICENSE

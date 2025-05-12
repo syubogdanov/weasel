@@ -13,7 +13,7 @@ class CacheSettings(BaseModel):
     # The connection timeout.
     timeout: PositiveFloat = 0.5
     # The cache size limit (bytes).
-    size_limit: NonNegativeInt = 1 * 1024 * 1024 * 1024  # 1 GiB
+    size_limit: NonNegativeInt = 4 * 1024 * 1024 * 1024  # 4 GiB
 
     @property
     def uri(self) -> str:
