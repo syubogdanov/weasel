@@ -1,4 +1,6 @@
-from pydantic import BaseModel, NonNegativeFloat, NonNegativeInt
+from typing import Annotated
+
+from pydantic import BaseModel, Field, NonNegativeInt
 
 
 class MutationTreeSettings(BaseModel):
@@ -9,4 +11,4 @@ class MutationTreeSettings(BaseModel):
     # The maximum tree depth.
     depth: NonNegativeInt = 3
     # The tolerance.
-    tolerance: NonNegativeFloat = 0.05
+    tolerance: Annotated[float, Field(ge=0.0, le=1.0)] = 0.05
