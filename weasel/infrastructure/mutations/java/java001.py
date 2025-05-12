@@ -8,7 +8,7 @@ from weasel.domain.services.interfaces.mutation import MutationInterface
 
 @dataclass
 class JavaMutation(MutationInterface):
-    """The *Java* mutation (`P001`).
+    """The *Java* mutation (`JAVA001`).
 
     Features
     --------
