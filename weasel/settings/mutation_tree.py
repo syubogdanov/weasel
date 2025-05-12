@@ -2,13 +2,7 @@ from pydantic import BaseModel, NonNegativeFloat, NonNegativeInt
 
 
 class MutationTreeSettings(BaseModel):
-    """The mutation tree settings.
-
-    Notes
-    -----
-    * The settings are not meant to be overridden by environment variables;
-    * `pydantic_settings` must not be used.
-    """
+    """The mutation tree settings."""
 
     # The number of branches to explore.
     degree_of_freedom: NonNegativeInt = 3
