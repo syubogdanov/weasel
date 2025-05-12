@@ -66,16 +66,16 @@ class WeaselContainer(DeclarativeContainer):
         GitHubAdapter, _cache=cache_adapter.provided
     )
 
+    java_language: Provider["LanguageInterface"] = Singleton(JavaLanguage)
+    python_language: Provider["LanguageInterface"] = Singleton(PythonLanguage)
+    sql_language: Provider["LanguageInterface"] = Singleton(SQLLanguage)
+    starlark_language: Provider["LanguageInterface"] = Singleton(StarlarkLanguage)
+
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
         DamerauLevenshteinEstimator
     )
     jaro_winkler_estimator: Provider["EstimatorInterface"] = Singleton(JaroWinklerEstimator)
     levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(LevenshteinEstimator)
-
-    java_language: Provider["LanguageInterface"] = Singleton(JavaLanguage)
-    python_language: Provider["LanguageInterface"] = Singleton(PythonLanguage)
-    sql_language: Provider["LanguageInterface"] = Singleton(SQLLanguage)
-    starlark_language: Provider["LanguageInterface"] = Singleton(StarlarkLanguage)
 
     estimator: Provider["EstimatorInterface"] = Selector(
         estimator_settings.provided.type,
