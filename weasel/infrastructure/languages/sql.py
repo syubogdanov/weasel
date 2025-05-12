@@ -1,3 +1,6 @@
+from sqlglot import parse
+from sqlglot.errors import ParseError
+
 from weasel.domain.services.interfaces.language import LanguageInterface
 
 
@@ -6,7 +9,11 @@ class SQLLanguage(LanguageInterface):
 
     def recognizes(self, code: str) -> bool:
         """Check if code matches the language."""
-        raise NotImplementedError
+        try:
+            parse(code)
+        except ParseError:
+            return False
+        return True
 
     @classmethod
     def get_extensions(cls) -> set[str]:
