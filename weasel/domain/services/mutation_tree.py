@@ -27,37 +27,35 @@ class MutationTree:
         if options.depth == self._depth:
             return options
 
-        scores: dict[MutationInterface, float] = {}
+        scores: list[tuple[MutationInterface, float]] = []
 
         for mutation in self._mutations:
             if mutation not in options.mutations:
                 mutated = mutation.mutate(source, target)
                 score = self._estimator.estimate(mutated, target)
                 if score > options.score:
-                    scores[mutation] = score
-
-        if not (top := nlargest(self._degree_of_freedom, scores.items(), key=lambda m: m[1])):
-            return options
+                    pair = (mutation, score)
+                    scores.append(pair)
 
         optimums: list[DFSOptions] = []
 
-        for mutation, score in top:
+        for mutation, score in nlargest(self._degree_of_freedom, scores, key=lambda x: x[1]):
             mutated = mutation.mutate(source, target)
 
-            next_mutations = options.mutations | {mutation}
+            next_mutations = [*options.mutations, mutation]
             next_options = DFSOptions(next_mutations, score)
 
             optimum = self._dfs(mutated, target, next_options)
             optimums.append(optimum)
 
-        return max(optimums, key=lambda o: o.score)
+        return max(optimums, key=lambda o: o.score, default=options)
 
 
 @dataclass
 class DFSOptions:
     """The DFS options."""
 
-    mutations: set["MutationInterface"]
+    mutations: list["MutationInterface"]
     score: float
 
     @property
@@ -68,4 +66,4 @@ class DFSOptions:
     @classmethod
     def initial(cls) -> "DFSOptions":
         """Return the initial options."""
-        return cls(mutations=set(), score=0.0)
+        return cls(mutations=[], score=0.0)
