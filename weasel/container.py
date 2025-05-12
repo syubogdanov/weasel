@@ -11,6 +11,7 @@ from weasel.infrastructure.languages.java import JavaLanguage
 from weasel.infrastructure.languages.python import PythonLanguage
 from weasel.infrastructure.languages.sql import SQLLanguage
 from weasel.infrastructure.languages.starlark import StarlarkLanguage
+from weasel.infrastructure.mutations.java import java001
 from weasel.infrastructure.mutations.python import py001, py002, py003, py004, py005, py006
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
 from weasel.settings.core import CoreSettings
@@ -51,7 +52,11 @@ class WeaselContainer(DeclarativeContainer):
     bzl002: Provider["MutationInterface"] = Singleton(bzl002.StarlarkMutation)
     bzl003: Provider["MutationInterface"] = Singleton(bzl003.StarlarkMutation)
     bzl004: Provider["MutationInterface"] = Singleton(bzl004.StarlarkMutation)
-    bzl005: Provider["MutationInterface"] = Singleton(bzl005.StarlarkMutation)
+    bzl005: Provider["MutationInterface"] = Singleton(
+        bzl005.StarlarkMutation, _estimator=estimator.provided
+    )
+
+    java001: Provider["MutationInterface"] = Singleton(java001.JavaMutation)
 
     py001: Provider["MutationInterface"] = Singleton(py001.PythonMutation)
     py002: Provider["MutationInterface"] = Singleton(py002.PythonMutation)
@@ -62,7 +67,7 @@ class WeaselContainer(DeclarativeContainer):
         py006.PythonMutation, _estimator=estimator.provided
     )
 
-    java_mutations: Provider[list["MutationInterface"]] = List()
+    java_mutations: Provider[list["MutationInterface"]] = List(java001.provided)
     python_mutations: Provider[list["MutationInterface"]] = List(
         py001.provided,
         py002.provided,
