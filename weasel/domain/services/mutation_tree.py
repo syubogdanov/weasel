@@ -28,6 +28,9 @@ class MutationTree:
         if options.depth == self._depth:
             return options
 
+        if not self._degree_of_freedom:
+            return options
+
         scores: list[tuple[MutationInterface, float]] = []
 
         for mutation in self._mutations:
