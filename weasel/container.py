@@ -7,6 +7,7 @@ from weasel.domain.services.mutation_tree import MutationTree
 from weasel.infrastructure.estimators.damerau_levenshtein import DamerauLevenshteinEstimator
 from weasel.infrastructure.estimators.jaro_winkler import JaroWinklerEstimator
 from weasel.infrastructure.estimators.levenshtein import LevenshteinEstimator
+from weasel.infrastructure.languages.java import JavaLanguage
 from weasel.infrastructure.languages.python import PythonLanguage
 from weasel.infrastructure.languages.sql import SQLLanguage
 from weasel.infrastructure.languages.starlark import StarlarkLanguage
@@ -34,6 +35,7 @@ class WeaselContainer(DeclarativeContainer):
     jaro_winkler_estimator: Provider["EstimatorInterface"] = Singleton(JaroWinklerEstimator)
     levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(LevenshteinEstimator)
 
+    java_language: Provider["LanguageInterface"] = Singleton(JavaLanguage)
     python_language: Provider["LanguageInterface"] = Singleton(PythonLanguage)
     sql_language: Provider["LanguageInterface"] = Singleton(SQLLanguage)
     starlark_language: Provider["LanguageInterface"] = Singleton(StarlarkLanguage)
@@ -60,6 +62,7 @@ class WeaselContainer(DeclarativeContainer):
         py006.PythonMutation, _estimator=estimator.provided
     )
 
+    java_mutations: Provider[list["MutationInterface"]] = List()
     python_mutations: Provider[list["MutationInterface"]] = List(
         py001.provided,
         py002.provided,
@@ -73,6 +76,14 @@ class WeaselContainer(DeclarativeContainer):
     )
     sql_mutations: Provider[list["MutationInterface"]] = List()
 
+    java_mutation_tree: Provider["MutationTree"] = Singleton(
+        MutationTree,
+        _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
+        _depth=mutation_tree_settings.provided.depth,
+        _estimator=estimator.provided,
+        _mutations=java_mutations.provided,
+        _tolerance=mutation_tree_settings.provided.tolerance,
+    )
     python_mutation_tree: Provider["MutationTree"] = Singleton(
         MutationTree,
         _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
