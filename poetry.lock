@@ -197,6 +197,21 @@ files = [
 ]
 
 [[package]]
+name = "javalang-ext"
+version = "0.14.3"
+description = "Pure Python Java parser and tools"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "javalang-ext-0.14.3.tar.gz", hash = "sha256:e9834589f8b080ada4c154caf767e694f9929a180d5ca0c0305c0ead035df698"},
+    {file = "javalang_ext-0.14.3-py3-none-any.whl", hash = "sha256:53901da904343275226e3e5c411358838830c049590f30a061c74fe6bc65aa68"},
+]
+
+[package.dependencies]
+six = "*"
+
+[[package]]
 name = "mypy"
 version = "1.15.0"
 description = "Optional static typing for Python"
@@ -648,6 +663,18 @@ files = [
 ]
 
 [[package]]
+name = "six"
+version = "1.17.0"
+description = "Python 2 and 3 compatibility utilities"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+groups = ["main"]
+files = [
+    {file = "six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274"},
+    {file = "six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"},
+]
+
+[[package]]
 name = "sqlglot"
 version = "26.17.1"
 description = "An easily customizable SQL parser and transpiler"
@@ -777,4 +804,4 @@ typing-extensions = ">=4.12.0"
 [metadata]
 lock-version = "2.1"
 python-versions = "~3.13"
-content-hash = "23b82a7f665c40339e3c2bfe1c4c7929f1079886effe5a92864e451504414ec4"
+content-hash = "aeb4b2ea58cb81a5df754ba6980c5df71d6ede16b807b1ca16d503951631f19f"

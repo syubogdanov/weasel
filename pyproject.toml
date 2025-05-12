@@ -41,6 +41,7 @@ package-mode = false
 
 [tool.poetry.dependencies]
 dependency-injector = "~4.46"
+javalang-ext = "~0.14"
 networkx = "~3.4"
 pydantic = "~2.11"
 python = "~3.13"

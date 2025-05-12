@@ -19,6 +19,7 @@
 | [python-dependency-injector][57] | [@ets-labs][58]                      | [GitHub][59]               | [BSD-3-Clause][60]               |
 | [networkx][61]                   | [@networkx][62]                      | [GitHub][63]               | [BSD-3-Clause][64]               |
 | [sqlglot][65]                    | [@tobymao][66]                       | [GitHub][67]               | [MIT][68]                        |
+| [javalang-ext][69]               | [@macnev2013][70]                    | [GitHub][71]               | [MIT][72]                        |
 
 [01]: https://www.flaticon.com/free-icon/weasel_334982
 [02]: https://www.flaticon.com/authors/freepik
@@ -104,3 +105,8 @@
 [66]: https://github.com/tobymao
 [67]: https://github.com/
 [68]: https://github.com/tobymao/sqlglot/blob/main/LICENSE
+
+[69]: https://github.com/macnev2013/javalang-ext
+[70]: https://github.com/macnev2013
+[71]: https://github.com/
+[72]: https://github.com/macnev2013/javalang-ext/blob/master/LICENSE.txt
