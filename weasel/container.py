@@ -14,7 +14,7 @@ from weasel.infrastructure.languages.starlark import StarlarkLanguage
 from weasel.infrastructure.mutations.java import java001
 from weasel.infrastructure.mutations.python import py001, py002, py003, py004, py005, py006
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
-from weasel.settings.core import CoreSettings
+from weasel.settings.estimator import EstimatorSettings
 from weasel.settings.mutation_tree import MutationTreeSettings
 from weasel.settings.retries import RetriesSettings
 
@@ -28,7 +28,7 @@ if TYPE_CHECKING:
 class WeaselContainer(DeclarativeContainer):
     """The dependency injection container."""
 
-    core_settings: Provider["CoreSettings"] = Singleton(CoreSettings)
+    estimator_settings: Provider["EstimatorSettings"] = Singleton(EstimatorSettings)
     mutation_tree_settings: Provider["MutationTreeSettings"] = Singleton(MutationTreeSettings)
     retries_settings: Provider["RetriesSettings"] = Singleton(RetriesSettings)
 
@@ -44,7 +44,7 @@ class WeaselContainer(DeclarativeContainer):
     starlark_language: Provider["LanguageInterface"] = Singleton(StarlarkLanguage)
 
     estimator: Provider["EstimatorInterface"] = Selector(
-        core_settings.provided.estimator_type,
+        estimator_settings.provided.type,
         damerau_levenshtein=damerau_levenshtein_estimator.provided,
         jaro_winkler=jaro_winkler_estimator.provided,
         levenshtein=levenshtein_estimator.provided,

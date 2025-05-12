@@ -11,8 +11,8 @@ class EstimatorType(StrEnum):
     LEVENSHTEIN = auto()
 
 
-class CoreSettings(BaseModel):
-    """The core settings."""
+class EstimatorSettings(BaseModel):
+    """The estimator settings."""
 
-    # The algorithm used to estimate the similarity between two strings.
-    estimator_type: EstimatorType = EstimatorType.DAMERAU_LEVENSHTEIN
+    # The estimator used to measure string similarity.
+    type: EstimatorType = EstimatorType.DAMERAU_LEVENSHTEIN
