@@ -11,8 +11,8 @@ class EstimatorType(StrEnum):
     LEVENSHTEIN = auto()
 
 
-class PublicSettings(BaseModel):
-    """The public settings.
+class CommandLineSettings(BaseModel):
+    """The command line settings.
 
     Notes
     -----
