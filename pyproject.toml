@@ -44,6 +44,7 @@ cashews  = {version="~7.4", extras=["diskcache", "speedup"]}
 dependency-injector = "~4.46"
 javalang-ext = "~0.14"
 networkx = "~3.4"
+platformdirs = "~4.3"
 pydantic = "~2.11"
 python = "~3.13"
 rapidfuzz = "~3.13"

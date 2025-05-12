@@ -22,6 +22,7 @@
 | [javalang-ext][69]               | [@macnev2013][70]                    | [GitHub][71]               | [MIT][72]                        |
 | [cashews][73]                    | [@Krukov][74]                        | [GitHub][75]               | [MIT][76]                        |
 | [tenacity][77]                   | [@jd][78]                            | [GitHub][79]               | [Apache-2.0][80]                 |
+| [platformdirs][81]               | [@tox-dev][82]                       | [GitHub][83]               | [MIT][84]                        |
 
 [01]: https://www.flaticon.com/free-icon/weasel_334982
 [02]: https://www.flaticon.com/authors/freepik
@@ -122,3 +123,8 @@
 [78]: https://github.com/jd
 [79]: https://github.com/
 [80]: https://github.com/jd/tenacity/blob/main/LICENSE
+
+[81]: https://github.com/tox-dev/platformdirs
+[82]: https://github.com/tox-dev
+[83]: https://github.com/
+[84]: https://github.com/tox-dev/platformdirs/blob/main/LICENSE

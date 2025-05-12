@@ -4,6 +4,8 @@ from dependency_injector.containers import DeclarativeContainer
 from dependency_injector.providers import List, Provider, Selector, Singleton
 
 from weasel.domain.services.mutation_tree import MutationTree
+from weasel.infrastructure.adapters.cache import CacheAdapter
+from weasel.infrastructure.adapters.cashews.cache import CacheCashewsAdapter
 from weasel.infrastructure.estimators.damerau_levenshtein import DamerauLevenshteinEstimator
 from weasel.infrastructure.estimators.jaro_winkler import JaroWinklerEstimator
 from weasel.infrastructure.estimators.levenshtein import LevenshteinEstimator
@@ -14,9 +16,11 @@ from weasel.infrastructure.languages.starlark import StarlarkLanguage
 from weasel.infrastructure.mutations.java import java001
 from weasel.infrastructure.mutations.python import py001, py002, py003, py004, py005, py006
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
+from weasel.settings.cache import CacheSettings
 from weasel.settings.estimator import EstimatorSettings
 from weasel.settings.mutation_tree import MutationTreeSettings
 from weasel.settings.retries import RetriesSettings
+from weasel.settings.service import ServiceSettings
 
 
 if TYPE_CHECKING:
@@ -28,9 +32,21 @@ if TYPE_CHECKING:
 class WeaselContainer(DeclarativeContainer):
     """The dependency injection container."""
 
+    service_settings: Provider["ServiceSettings"] = Singleton(ServiceSettings)
+
+    cache_settings: Provider["CacheSettings"] = Singleton(
+        CacheSettings, directory=service_settings.provided.cache_directory
+    )
     estimator_settings: Provider["EstimatorSettings"] = Singleton(EstimatorSettings)
     mutation_tree_settings: Provider["MutationTreeSettings"] = Singleton(MutationTreeSettings)
     retries_settings: Provider["RetriesSettings"] = Singleton(RetriesSettings)
+
+    cache_cashews_adapter: Provider["CacheCashewsAdapter"] = Singleton(
+        CacheCashewsAdapter, _settings=cache_settings.provided
+    )
+    cache_adapter: Provider["CacheAdapter"] = Singleton(
+        CacheAdapter, _cashews=cache_cashews_adapter.provided
+    )
 
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
         DamerauLevenshteinEstimator
