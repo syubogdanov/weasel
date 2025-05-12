@@ -1,14 +1,16 @@
 from typing import TYPE_CHECKING
 
 from dependency_injector.containers import DeclarativeContainer
-from dependency_injector.providers import Provider, Selector, Singleton
+from dependency_injector.providers import List, Provider, Selector, Singleton
 
+from weasel.domain.services.mutation_tree import MutationTree
 from weasel.infrastructure.estimators.damerau_levenshtein import DamerauLevenshteinEstimator
 from weasel.infrastructure.estimators.jaro_winkler import JaroWinklerEstimator
 from weasel.infrastructure.estimators.levenshtein import LevenshteinEstimator
 from weasel.infrastructure.mutations.python import py001, py002, py003, py004, py005, py006
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
-from weasel.settings.service import ServiceSettings
+from weasel.settings.private import PrivateSettings
+from weasel.settings.public import PublicSettings
 
 
 if TYPE_CHECKING:
@@ -19,7 +21,8 @@ if TYPE_CHECKING:
 class WeaselContainer(DeclarativeContainer):
     """The dependency injection container."""
 
-    service_settings: Provider["ServiceSettings"] = Singleton(ServiceSettings)
+    private_settings: Provider["PrivateSettings"] = Singleton(PrivateSettings)
+    public_settings: Provider["PublicSettings"] = Singleton(PublicSettings)
 
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
         DamerauLevenshteinEstimator
@@ -28,7 +31,7 @@ class WeaselContainer(DeclarativeContainer):
     levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(LevenshteinEstimator)
 
     estimator: Provider["EstimatorInterface"] = Selector(
-        service_settings.provided.estimator_type,
+        public_settings.provided.estimator_type,
         damerau_levenshtein=damerau_levenshtein_estimator.provided,
         jaro_winkler=jaro_winkler_estimator.provided,
         levenshtein=levenshtein_estimator.provided,
@@ -47,6 +50,33 @@ class WeaselContainer(DeclarativeContainer):
     py005: Provider["MutationInterface"] = Singleton(py005.PythonMutation)
     py006: Provider["MutationInterface"] = Singleton(
         py006.PythonMutation, _estimator=estimator.provided
+    )
+
+    python_mutations: Provider[list["MutationInterface"]] = List(
+        py001.provided,
+        py002.provided,
+        py003.provided,
+        py004.provided,
+        py005.provided,
+        py006.provided,
+    )
+    starlark_mutations: Provider[list["MutationInterface"]] = List(
+        bzl001.provided, bzl002.provided, bzl003.provided, bzl004.provided, bzl005.provided
+    )
+
+    python_mutation_tree: Provider["MutationTree"] = Singleton(
+        MutationTree,
+        _degree_of_freedom=private_settings.provided.mutation_tree_degree_of_freedom,
+        _depth=private_settings.provided.mutation_tree_depth,
+        _estimator=estimator.provided,
+        _mutations=python_mutations.provided,
+    )
+    starlark_mutation_tree: Provider["MutationTree"] = Singleton(
+        MutationTree,
+        _degree_of_freedom=private_settings.provided.mutation_tree_degree_of_freedom,
+        _depth=private_settings.provided.mutation_tree_depth,
+        _estimator=estimator.provided,
+        _mutations=starlark_mutations.provided,
     )
 
 

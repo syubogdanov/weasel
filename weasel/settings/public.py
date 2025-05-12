@@ -11,12 +11,14 @@ class EstimatorType(StrEnum):
     LEVENSHTEIN = auto()
 
 
-class ServiceSettings(BaseModel):
-    """The service settings.
+class PublicSettings(BaseModel):
+    """The public settings.
 
     Notes
     -----
-    * `pydantic_settings` should not be used to avoid using the environment.
+    * The settings are not meant to be overridden by environment variables;
+    * `pydantic_settings` must not be used.
     """
 
+    # The algorithm used to estimate the similarity between two strings.
     estimator_type: EstimatorType = EstimatorType.DAMERAU_LEVENSHTEIN
