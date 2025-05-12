@@ -9,7 +9,7 @@ from weasel.infrastructure.estimators.jaro_winkler import JaroWinklerEstimator
 from weasel.infrastructure.estimators.levenshtein import LevenshteinEstimator
 from weasel.infrastructure.mutations.python import py001, py002, py003, py004, py005, py006
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
-from weasel.settings.cli import CommandLineSettings
+from weasel.settings.core import CoreSettings
 from weasel.settings.mutation_tree import MutationTreeSettings
 
 
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 class WeaselContainer(DeclarativeContainer):
     """The dependency injection container."""
 
-    command_line_settings: Provider["CommandLineSettings"] = Singleton(CommandLineSettings)
+    core_settings: Provider["CoreSettings"] = Singleton(CoreSettings)
     mutation_tree_settings: Provider["MutationTreeSettings"] = Singleton(MutationTreeSettings)
 
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
@@ -31,7 +31,7 @@ class WeaselContainer(DeclarativeContainer):
     levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(LevenshteinEstimator)
 
     estimator: Provider["EstimatorInterface"] = Selector(
-        command_line_settings.provided.estimator_type,
+        core_settings.provided.estimator_type,
         damerau_levenshtein=damerau_levenshtein_estimator.provided,
         jaro_winkler=jaro_winkler_estimator.provided,
         levenshtein=levenshtein_estimator.provided,

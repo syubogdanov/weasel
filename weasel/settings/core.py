@@ -11,8 +11,8 @@ class EstimatorType(StrEnum):
     LEVENSHTEIN = auto()
 
 
-class CommandLineSettings(BaseModel):
-    """The command line settings."""
+class CoreSettings(BaseModel):
+    """The core settings."""
 
     # The algorithm used to estimate the similarity between two strings.
     estimator_type: EstimatorType = EstimatorType.DAMERAU_LEVENSHTEIN
