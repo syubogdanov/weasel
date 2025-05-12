@@ -23,6 +23,7 @@
 | [cashews][73]                    | [@Krukov][74]                        | [GitHub][75]               | [MIT][76]                        |
 | [tenacity][77]                   | [@jd][78]                            | [GitHub][79]               | [Apache-2.0][80]                 |
 | [platformdirs][81]               | [@tox-dev][82]                       | [GitHub][83]               | [MIT][84]                        |
+| [blake3-py][85]                  | [@oconnor663][86]                    | [GitHub][87]               | [CC0-1.0][88]                    |
 
 [01]: https://www.flaticon.com/free-icon/weasel_334982
 [02]: https://www.flaticon.com/authors/freepik
@@ -128,3 +129,8 @@
 [82]: https://github.com/tox-dev
 [83]: https://github.com/
 [84]: https://github.com/tox-dev/platformdirs/blob/main/LICENSE
+
+[85]: https://github.com/oconnor663/blake3-py
+[86]: https://github.com/oconnor663
+[87]: https://github.com/
+[88]: https://github.com/oconnor663/blake3-py/blob/master/LICENSE
