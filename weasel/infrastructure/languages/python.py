@@ -1,12 +1,16 @@
 import ast
 
+from dataclasses import dataclass
+
 from weasel.domain.services.interfaces.language import LanguageInterface
 
 
+@dataclass
 class PythonLanguage(LanguageInterface):
     """The *Python* language."""
 
-    def recognizes(self, code: str) -> bool:
+    @classmethod
+    def recognizes(cls, code: str) -> bool:
         """Check if code matches the language."""
         try:
             ast.parse(code)

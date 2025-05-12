@@ -146,6 +146,12 @@ extend-ignore-names = [
     "visit_UnaryOp",
     "visit_While",
     "visit_With",
+
+    "visit_GeneratorExp",
+    "visit_Import",
+    "visit_ImportFrom",
+    "visit_Yield",
+    "visit_YieldFrom",
 ]
 
 [tool.ruff.lint.pydocstyle]
