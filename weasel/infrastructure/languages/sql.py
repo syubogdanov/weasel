@@ -11,7 +11,7 @@ class SQLLanguage(LanguageInterface):
     """The *SQL* language."""
 
     @classmethod
-    def recognizes(cls, code: str) -> bool:
+    async def recognizes(cls, code: str) -> bool:
         """Check if code matches the language."""
         try:
             parse(code)

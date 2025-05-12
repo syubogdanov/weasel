@@ -6,7 +6,7 @@ class LanguageInterface(Protocol):
     """The language interface."""
 
     @abstractmethod
-    def recognizes(self, code: str) -> bool:
+    async def recognizes(self, code: str) -> bool:
         """Check if the code matches the language."""
 
     @abstractmethod

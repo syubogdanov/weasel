@@ -6,5 +6,5 @@ class MutationInterface(Protocol):
     """The mutation interface."""
 
     @abstractmethod
-    def mutate(self, source: str, target: str) -> str:
+    async def mutate(self, source: str, target: str) -> str:
         """Mutate `source` using `target` as the reference."""

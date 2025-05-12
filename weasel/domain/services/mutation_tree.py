@@ -18,12 +18,12 @@ class MutationTree:
     _mutations: list["MutationInterface"]
     _tolerance: float
 
-    def get_mutations(self, source: str, target: str) -> list["MutationInterface"]:
+    async def get_mutations(self, source: str, target: str) -> list["MutationInterface"]:
         """Get the set of mutations required to convert `source` to `target`."""
-        optimum = self._dfs(source, target, DFSOptions.initial())
+        optimum = await self._dfs(source, target, DFSOptions.initial())
         return optimum.mutations
 
-    def _dfs(self, source: str, target: str, options: "DFSOptions") -> "DFSOptions":
+    async def _dfs(self, source: str, target: str, options: "DFSOptions") -> "DFSOptions":
         """Perform a depth-first search."""
         if options.depth == self._depth:
             return options
@@ -35,8 +35,8 @@ class MutationTree:
 
         for mutation in self._mutations:
             if mutation not in options.mutations:
-                mutated = mutation.mutate(source, target)
-                score = self._estimator.estimate(mutated, target)
+                mutated = await mutation.mutate(source, target)
+                score = await self._estimator.estimate(mutated, target)
                 if score > options.score + self._tolerance:
                     pair = (mutation, score)
                     scores.append(pair)
@@ -44,12 +44,12 @@ class MutationTree:
         optimums: list[DFSOptions] = []
 
         for mutation, score in nlargest(self._degree_of_freedom, scores, key=lambda p: p[1]):
-            mutated = mutation.mutate(source, target)
+            mutated = await mutation.mutate(source, target)
 
             next_mutations = [*options.mutations, mutation]
             next_options = DFSOptions(next_mutations, score)
 
-            optimum = self._dfs(mutated, target, next_options)
+            optimum = await self._dfs(mutated, target, next_options)
             optimums.append(optimum)
 
         return max(optimums, key=lambda o: o.score, default=options)

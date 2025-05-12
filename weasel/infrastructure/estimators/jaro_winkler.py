@@ -10,6 +10,6 @@ class JaroWinklerEstimator(EstimatorInterface):
     """The Jaro-Winkler estimator."""
 
     @classmethod
-    def estimate(cls, source: str, target: str) -> float:
+    async def estimate(cls, source: str, target: str) -> float:
         """Estimate whether `source` is derived from `target`."""
         return normalized_similarity(source, target)

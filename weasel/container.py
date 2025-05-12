@@ -1,10 +1,8 @@
-from asyncio import Lock
 from typing import TYPE_CHECKING
 
 from dependency_injector.containers import DeclarativeContainer
-from dependency_injector.providers import List, Object, Provider, Selector, Singleton
+from dependency_injector.providers import List, Provider, Selector, Singleton
 
-from weasel.domain.services.interfaces.git import GitInterface
 from weasel.domain.services.mutation_tree import MutationTree
 from weasel.infrastructure.adapters.cache import CacheAdapter
 from weasel.infrastructure.adapters.cashews.cache import CacheCashewsAdapter
@@ -31,6 +29,7 @@ from weasel.settings.system import SystemSettings
 
 if TYPE_CHECKING:
     from weasel.domain.services.interfaces.estimator import EstimatorInterface
+    from weasel.domain.services.interfaces.git import GitInterface
     from weasel.domain.services.interfaces.hash import HashInterface
     from weasel.domain.services.interfaces.language import LanguageInterface
     from weasel.domain.services.interfaces.mutation import MutationInterface
@@ -50,7 +49,7 @@ class WeaselContainer(DeclarativeContainer):
     system_settings: Provider["SystemSettings"] = Singleton(SystemSettings)
 
     hash_adapter: Provider["HashInterface"] = Singleton(
-        HashAdapter, _workers=system_settings.provided.workers
+        HashAdapter, _max_threads=system_settings.provided.workers
     )
 
     cache_cashews_adapter: Provider["CacheCashewsAdapter"] = Singleton(

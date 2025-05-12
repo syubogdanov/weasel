@@ -10,7 +10,7 @@ class PythonLanguage(LanguageInterface):
     """The *Python* language."""
 
     @classmethod
-    def recognizes(cls, code: str) -> bool:
+    async def recognizes(cls, code: str) -> bool:
         """Check if code matches the language."""
         try:
             ast.parse(code)

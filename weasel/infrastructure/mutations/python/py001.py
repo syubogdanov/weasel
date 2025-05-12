@@ -17,6 +17,6 @@ class PythonMutation(MutationInterface):
     """
 
     @classmethod
-    def mutate(cls, source: str, target: str) -> str:  # noqa: ARG003
+    async def mutate(cls, source: str, target: str) -> str:  # noqa: ARG003
         """Mutate `source` using `target` as the reference."""
         return ast.unparse(ast.parse(source))

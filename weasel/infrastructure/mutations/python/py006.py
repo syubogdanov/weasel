@@ -28,13 +28,13 @@ class PythonMutation(MutationInterface):
 
     _estimator: "EstimatorInterface"
 
-    def mutate(self, source: str, target: str) -> str:
+    async def mutate(self, source: str, target: str) -> str:
         """Mutate `source` using `target` as the reference."""
         source_tree = ast.parse(source)
         target_tree = ast.parse(target)
 
         reorderer = PythonReorderer(_estimator=self._estimator)
-        tree = reorderer.reorder_tree(source_tree, target_tree)
+        tree = await reorderer.reorder_tree(source_tree, target_tree)
 
         if not reorderer.is_triggered():
             return source
@@ -62,17 +62,17 @@ class PythonReorderer:
         """Check if any permutation was made."""
         return self._triggered
 
-    def reorder_tree(self, source: ast.Module, target: ast.Module) -> ast.Module:
+    async def reorder_tree(self, source: ast.Module, target: ast.Module) -> ast.Module:
         """Reorder `source` using `target` as the reference."""
-        body = self._reorder_list(source.body, target.body)
+        body = await self._reorder_list(source.body, target.body)
         return ast.Module(body=body, type_ignores=source.type_ignores)
 
-    def _reorder_list(self, source: list[ast.AST], target: list[ast.AST]) -> list[ast.AST]:
+    async def _reorder_list(self, source: list[ast.AST], target: list[ast.AST]) -> list[ast.AST]:
         """Reorder `source` using `target` as the reference."""
         source_blocks = self._split_into_blocks(source)
         target_blocks = self._split_into_blocks(target)
 
-        matchings = self._match_blocks(source_blocks, target_blocks)
+        matchings = await self._match_blocks(source_blocks, target_blocks)
 
         blocks: list[ast.AST | list[ast.AST]] = [[]] * len(source_blocks)
 
@@ -94,7 +94,7 @@ class PythonReorderer:
             target_block = target_blocks[target_index]
 
             if isinstance(source_block, ast.ClassDef) and isinstance(target_block, ast.ClassDef):
-                source_block = self._reorder_class(source_block, target_block)
+                source_block = await self._reorder_class(source_block, target_block)
 
             blocks[new_index] = source_block
 
@@ -103,26 +103,27 @@ class PythonReorderer:
 
         return self._merge_blocks(blocks)
 
-    def _reorder_class(self, source: ast.ClassDef, target: ast.ClassDef) -> ast.ClassDef:
+    async def _reorder_class(self, source: ast.ClassDef, target: ast.ClassDef) -> ast.ClassDef:
         """Reorder `source` using `target` as the reference."""
+        body = await self._reorder_list(source.body, target.body)
         return ast.ClassDef(
             name=source.name,
             bases=source.bases,
             keywords=source.keywords,
-            body=self._reorder_list(source.body, target.body),
+            body=body,
             decorator_list=source.decorator_list,
             type_params=source.type_params,
         )
 
-    def _compare_two_blocks(
+    async def _compare_two_blocks(
         self, source: ast.AST | list[ast.AST], target: ast.AST | list[ast.AST]
     ) -> float:
         """Compare `source` and `target` blocks."""
         if isinstance(source, ast.ClassDef) and isinstance(target, ast.ClassDef):
-            source = self._reorder_class(source, target)
-        return self._estimator.estimate(ast.unparse(source), ast.unparse(target))
+            source = await self._reorder_class(source, target)
+        return await self._estimator.estimate(ast.unparse(source), ast.unparse(target))
 
-    def _match_blocks(
+    async def _match_blocks(
         self, source: list[ast.AST | list[ast.AST]], target: list[ast.AST | list[ast.AST]]
     ) -> dict[int, int]:
         """Match `source` and `target` blocks."""
@@ -130,7 +131,7 @@ class PythonReorderer:
 
         for index1, block1 in enumerate(source):
             for index2, block2 in enumerate(target, start=len(source)):
-                weight = self._compare_two_blocks(block1, block2)
+                weight = await self._compare_two_blocks(block1, block2)
                 graph.add_edge(index1, index2, weight=weight)
 
         return {
