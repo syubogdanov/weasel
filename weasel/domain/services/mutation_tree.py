@@ -16,6 +16,7 @@ class MutationTree:
     _depth: int
     _estimator: "EstimatorInterface"
     _mutations: list["MutationInterface"]
+    _tolerance: float
 
     def get_mutations(self, source: str, target: str) -> set["MutationInterface"]:
         """Get the set of mutations required to convert `source` to `target`."""
@@ -33,7 +34,7 @@ class MutationTree:
             if mutation not in options.mutations:
                 mutated = mutation.mutate(source, target)
                 score = self._estimator.estimate(mutated, target)
-                if score > options.score:
+                if score > options.score + self._tolerance:
                     pair = (mutation, score)
                     scores.append(pair)
 

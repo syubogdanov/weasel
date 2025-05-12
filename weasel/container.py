@@ -9,7 +9,7 @@ from weasel.infrastructure.estimators.jaro_winkler import JaroWinklerEstimator
 from weasel.infrastructure.estimators.levenshtein import LevenshteinEstimator
 from weasel.infrastructure.mutations.python import py001, py002, py003, py004, py005, py006
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
-from weasel.settings.private import PrivateSettings
+from weasel.settings.mutation_tree import MutationTreeSettings
 from weasel.settings.public import PublicSettings
 
 
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 class WeaselContainer(DeclarativeContainer):
     """The dependency injection container."""
 
-    private_settings: Provider["PrivateSettings"] = Singleton(PrivateSettings)
+    mutation_tree_settings: Provider["MutationTreeSettings"] = Singleton(MutationTreeSettings)
     public_settings: Provider["PublicSettings"] = Singleton(PublicSettings)
 
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
@@ -66,17 +66,19 @@ class WeaselContainer(DeclarativeContainer):
 
     python_mutation_tree: Provider["MutationTree"] = Singleton(
         MutationTree,
-        _degree_of_freedom=private_settings.provided.mutation_tree_degree_of_freedom,
-        _depth=private_settings.provided.mutation_tree_depth,
+        _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
+        _depth=mutation_tree_settings.provided.depth,
         _estimator=estimator.provided,
         _mutations=python_mutations.provided,
+        _tolerance=mutation_tree_settings.provided.tolerance,
     )
     starlark_mutation_tree: Provider["MutationTree"] = Singleton(
         MutationTree,
-        _degree_of_freedom=private_settings.provided.mutation_tree_degree_of_freedom,
-        _depth=private_settings.provided.mutation_tree_depth,
+        _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
+        _depth=mutation_tree_settings.provided.depth,
         _estimator=estimator.provided,
         _mutations=starlark_mutations.provided,
+        _tolerance=mutation_tree_settings.provided.tolerance,
     )
 
 
