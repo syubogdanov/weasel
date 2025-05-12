@@ -18,7 +18,7 @@ class MutationTree:
     _mutations: list["MutationInterface"]
     _tolerance: float
 
-    def get_mutations(self, source: str, target: str) -> set["MutationInterface"]:
+    def get_mutations(self, source: str, target: str) -> list["MutationInterface"]:
         """Get the set of mutations required to convert `source` to `target`."""
         optimum = self._dfs(source, target, DFSOptions.initial())
         return optimum.mutations
