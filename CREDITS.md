@@ -21,6 +21,7 @@
 | [sqlglot][65]                    | [@tobymao][66]                       | [GitHub][67]               | [MIT][68]                        |
 | [javalang-ext][69]               | [@macnev2013][70]                    | [GitHub][71]               | [MIT][72]                        |
 | [cashews][73]                    | [@Krukov][74]                        | [GitHub][75]               | [MIT][76]                        |
+| [tenacity][77]                   | [@jd][78]                            | [GitHub][79]               | [Apache-2.0][80]                 |
 
 [01]: https://www.flaticon.com/free-icon/weasel_334982
 [02]: https://www.flaticon.com/authors/freepik
@@ -116,3 +117,8 @@
 [74]: https://github.com/Krukov
 [75]: https://github.com/
 [76]: https://github.com/Krukov/cashews/blob/master/LICENSE
+
+[77]: https://github.com/jd/tenacity
+[78]: https://github.com/jd
+[79]: https://github.com/
+[80]: https://github.com/jd/tenacity/blob/main/LICENSE

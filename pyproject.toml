@@ -48,6 +48,7 @@ pydantic = "~2.11"
 python = "~3.13"
 rapidfuzz = "~3.13"
 sqlglot = {version="~26.17", extras=["rs"]}
+tenacity = "~9.1"
 
 [tool.poetry.group.lint]
 optional = true

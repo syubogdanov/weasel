@@ -16,6 +16,7 @@ from weasel.infrastructure.mutations.python import py001, py002, py003, py004, p
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
 from weasel.settings.core import CoreSettings
 from weasel.settings.mutation_tree import MutationTreeSettings
+from weasel.settings.retries import RetriesSettings
 
 
 if TYPE_CHECKING:
@@ -29,6 +30,7 @@ class WeaselContainer(DeclarativeContainer):
 
     core_settings: Provider["CoreSettings"] = Singleton(CoreSettings)
     mutation_tree_settings: Provider["MutationTreeSettings"] = Singleton(MutationTreeSettings)
+    retries_settings: Provider["RetriesSettings"] = Singleton(RetriesSettings)
 
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
         DamerauLevenshteinEstimator
