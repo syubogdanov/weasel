@@ -1,8 +1,10 @@
+from asyncio import Lock
 from typing import TYPE_CHECKING
 
 from dependency_injector.containers import DeclarativeContainer
-from dependency_injector.providers import List, Provider, Selector, Singleton
+from dependency_injector.providers import List, Object, Provider, Selector, Singleton
 
+from weasel.domain.services.interfaces.git import GitInterface
 from weasel.domain.services.mutation_tree import MutationTree
 from weasel.infrastructure.adapters.cache import CacheAdapter
 from weasel.infrastructure.adapters.cashews.cache import CacheCashewsAdapter
@@ -10,6 +12,8 @@ from weasel.infrastructure.adapters.hash import HashAdapter
 from weasel.infrastructure.estimators.damerau_levenshtein import DamerauLevenshteinEstimator
 from weasel.infrastructure.estimators.jaro_winkler import JaroWinklerEstimator
 from weasel.infrastructure.estimators.levenshtein import LevenshteinEstimator
+from weasel.infrastructure.git.bitbucket import BitbucketAdapter
+from weasel.infrastructure.git.github import GitHubAdapter
 from weasel.infrastructure.languages.java import JavaLanguage
 from weasel.infrastructure.languages.python import PythonLanguage
 from weasel.infrastructure.languages.sql import SQLLanguage
@@ -46,7 +50,7 @@ class WeaselContainer(DeclarativeContainer):
     system_settings: Provider["SystemSettings"] = Singleton(SystemSettings)
 
     hash_adapter: Provider["HashInterface"] = Singleton(
-        HashAdapter, _workers=system_settings.provided.workers,
+        HashAdapter, _workers=system_settings.provided.workers
     )
 
     cache_cashews_adapter: Provider["CacheCashewsAdapter"] = Singleton(
@@ -54,6 +58,13 @@ class WeaselContainer(DeclarativeContainer):
     )
     cache_adapter: Provider["CacheAdapter"] = Singleton(
         CacheAdapter, _cashews=cache_cashews_adapter.provided
+    )
+
+    bitbucket_adapter: Provider["GitInterface"] = Singleton(
+        BitbucketAdapter, _cache=cache_adapter.provided
+    )
+    github_adapter: Provider["GitInterface"] = Singleton(
+        GitHubAdapter, _cache=cache_adapter.provided
     )
 
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
