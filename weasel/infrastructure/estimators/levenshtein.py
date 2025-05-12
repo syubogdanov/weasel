@@ -1,3 +1,5 @@
+import asyncio
+
 from dataclasses import dataclass
 
 from rapidfuzz.distance.Levenshtein import normalized_similarity
@@ -11,5 +13,10 @@ class LevenshteinEstimator(EstimatorInterface):
 
     @classmethod
     async def estimate(cls, source: str, target: str) -> float:
-        """Estimate whether `source` is derived from `target`."""
-        return normalized_similarity(source, target)
+        """Estimate whether `source` is derived from `target`.
+
+        Notes
+        -----
+        * `rapidfuzz` is written in *C++*.
+        """
+        return asyncio.to_thread(normalized_similarity, source, target)
