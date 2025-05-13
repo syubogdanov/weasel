@@ -8,6 +8,7 @@ from weasel.domain.types.language import LanguageType
 from weasel.infrastructure.adapters.cache import CacheAdapter
 from weasel.infrastructure.adapters.cashews.cache import CacheCashewsAdapter
 from weasel.infrastructure.adapters.hash import HashAdapter
+from weasel.infrastructure.adapters.metrics import MetricsAdapter
 from weasel.infrastructure.adapters.mutation_tree import MutationTreeAdapter
 from weasel.infrastructure.adapters.sealer import SealerAdapter
 from weasel.infrastructure.estimators.damerau_levenshtein import DamerauLevenshteinEstimator
@@ -35,6 +36,7 @@ if TYPE_CHECKING:
     from weasel.domain.services.interfaces.git import GitInterface
     from weasel.domain.services.interfaces.hash import HashInterface
     from weasel.domain.services.interfaces.language import LanguageInterface
+    from weasel.domain.services.interfaces.metrics import MetricsInterface
     from weasel.domain.services.interfaces.mutation import MutationInterface
     from weasel.domain.services.interfaces.mutation_tree import MutationTreeInterface
     from weasel.domain.services.interfaces.sealer import SealerInterface
@@ -64,6 +66,9 @@ class WeaselContainer(DeclarativeContainer):
     )
     hash_adapter: Provider["HashInterface"] = Singleton(
         HashAdapter, _max_threads=system_settings.provided.max_workers
+    )
+    metrics_adapter: Provider["MetricsInterface"] = Singleton(
+        MetricsAdapter, _precision=service_settings.provided.precision
     )
     sealer_adapter: Provider["SealerInterface"] = Singleton(
         SealerAdapter,
