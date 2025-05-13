@@ -35,17 +35,6 @@ class MetricsAdapter(MetricsInterface):
             count=len(probabilities),
         )
 
-    def _calculate_nolie(self, probabilities: list[float]) -> float:
-        """Calculate the *NO-LIE* metric."""
-        if not probabilities:
-            return 0.0
-
-        if (maximum := max(probabilities)) < self._nolie_optimum:
-            return round(maximum, self._precision)
-
-        optimum = [proba for proba in probabilities if proba >= self._nolie_optimum]
-        return round(reduce(mul, optimum), self._precision)
-
     def _calculate_mean(self, probabilities: list[float]) -> float:
         """Calculate the mean."""
         value = statistics.mean(probabilities) if probabilities else 0.0
@@ -109,3 +98,19 @@ class MetricsAdapter(MetricsInterface):
 
         intervals = statistics.quantiles(probabilities, n=100)
         return round(intervals[98], self._precision)
+
+    def _calculate_nolie(self, probabilities: list[float]) -> float:
+        """Calculate the *NO-LIE* metric."""
+        if not probabilities:
+            return 0.0
+
+        if (maximum := max(probabilities)) < self._nolie_optimum:
+            return round(maximum, self._precision)
+
+        plus = [proba for proba in probabilities if proba >= self._nolie_optimum]
+        minus = [1.0 - proba for proba in plus]
+
+        numerator = reduce(mul, plus)
+        denominator = numerator + reduce(mul, minus)
+
+        return round(numerator / denominator, self._precision)

@@ -1,21 +1,21 @@
-from pydantic import BaseModel, ConfigDict, PositiveFloat, PositiveInt
+from pydantic import BaseModel, ConfigDict, NonNegativeFloat, NonNegativeInt
 
 
 class MetricsEntity(BaseModel):
     """The metrics entity."""
 
-    nolie: PositiveFloat
-    mean: PositiveFloat
-    gmean: PositiveFloat
-    median: PositiveFloat
-    min: PositiveFloat
-    max: PositiveFloat
-    var: PositiveFloat
-    std: PositiveFloat
-    p75: PositiveFloat
-    p90: PositiveFloat
-    p95: PositiveFloat
-    p99: PositiveFloat
-    count: PositiveInt
+    nolie: NonNegativeFloat
+    mean: NonNegativeFloat
+    gmean: NonNegativeFloat
+    median: NonNegativeFloat
+    min: NonNegativeFloat
+    max: NonNegativeFloat
+    var: NonNegativeFloat
+    std: NonNegativeFloat
+    p75: NonNegativeFloat
+    p90: NonNegativeFloat
+    p95: NonNegativeFloat
+    p99: NonNegativeFloat
+    count: NonNegativeInt
 
     model_config = ConfigDict(from_attributes=True)

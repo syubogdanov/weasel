@@ -10,6 +10,5 @@ class MutationInterface(Protocol):
         """Mutate `source` using `target` as the reference."""
 
     @abstractmethod
-    @classmethod
-    def as_label(cls) -> str:
+    def as_label(self) -> str:
         """Return the mutation label."""
