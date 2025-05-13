@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from pydantic import BaseModel, NonNegativeInt, PositiveFloat
+from pydantic import BaseModel, NonNegativeInt
 
 
 class CacheSettings(BaseModel):
@@ -10,8 +10,6 @@ class CacheSettings(BaseModel):
     directory: Path
     # The number of shards.
     shards: NonNegativeInt = 8
-    # The connection timeout.
-    timeout: PositiveFloat = 0.5
     # The cache size limit (bytes).
     size_limit: NonNegativeInt = 4 * 1024 * 1024 * 1024  # 4 GiB
 

@@ -23,7 +23,6 @@ class CacheCashewsAdapter:
             self._settings.uri,
             directory=self._settings.directory,
             shards=self._settings.shards,
-            timeout=self._settings.timeout,
             size_limit=self._settings.size_limit,
         )
 
