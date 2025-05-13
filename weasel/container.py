@@ -83,10 +83,23 @@ class WeaselContainer(DeclarativeContainer):
     starlark_language: Provider["LanguageInterface"] = Singleton(StarlarkLanguage)
 
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
-        DamerauLevenshteinEstimator
+        DamerauLevenshteinEstimator,
+        _cache=cache_adapter.provided,
+        _hash=hash_adapter.provided,
+        _precision=service_settings.provided.precision,
     )
-    jaro_winkler_estimator: Provider["EstimatorInterface"] = Singleton(JaroWinklerEstimator)
-    levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(LevenshteinEstimator)
+    jaro_winkler_estimator: Provider["EstimatorInterface"] = Singleton(
+        JaroWinklerEstimator,
+        _cache=cache_adapter.provided,
+        _hash=hash_adapter.provided,
+        _precision=service_settings.provided.precision,
+    )
+    levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
+        LevenshteinEstimator,
+        _cache=cache_adapter.provided,
+        _hash=hash_adapter.provided,
+        _precision=service_settings.provided.precision,
+    )
 
     estimator: Provider["EstimatorInterface"] = Selector(
         estimator_settings.provided.type,
