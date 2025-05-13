@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class GitHubEntity(BaseModel):
@@ -10,3 +10,5 @@ class GitHubEntity(BaseModel):
     branch: str | None = None
     commit: str | None = None
     tag: str | None = None
+
+    model_config = ConfigDict(from_attributes=True)

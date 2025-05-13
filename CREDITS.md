@@ -1,148 +1,160 @@
 # Credits Section
 
-| Name                             | Author                               | Web-Service                | License                          |
-|----------------------------------|--------------------------------------|----------------------------|----------------------------------|
-| [Weasel Icon][01]                | [@freepik][02]                       | [Flaticon][03]             | [Flaticon][04]                   |
-| [Code of Conduct][05]            | [Coraline Ada Ehmke][06]             | [Contributor Covenant][07] | [CC BY 4.0][08]                  |
-| [GNU Make][09]                   | [Free Software Foundation, Inc.][10] | [GNU][11]                  | [GNU General Public License][12] |
-| [cpython][13]                    | [@python][14]                        | [GitHub][15]               | [PSF License][16]                |
-| [poetry][17]                     | [@python-poetry][18]                 | [GitHub][19]               | [MIT][20]                        |
-| [black][21]                      | [@psf][22]                           | [GitHub][23]               | [MIT][24]                        |
-| [mypy][25]                       | [@python][26]                        | [GitHub][27]               | [MIT][28]                        |
-| [ruff][29]                       | [@astral-sh][30]                     | [GitHub][31]               | [MIT][32]                        |
-| [pytest][33]                     | [@pytest-dev][34]                    | [GitHub][35]               | [MIT][36]                        |
-| [pytest-asyncio][37]             | [@pytest-dev][38]                    | [GitHub][39]               | [Apache-2.0][40]                 |
-| [pydantic][41]                   | [@pydantic][42]                      | [GitHub][43]               | [MIT][44]                        |
-| [Docker][45]                     | [Docker Inc.][46]                    | [Docker][47]               | [Docker Personal][48]            |
-| [shields][49]                    | [badges][50]                         | [GitHub][51]               | [CC0-1.0][52]                    |
-| [RapidFuzz][53]                  | [rapidfuzz][54]                      | [GitHub][55]               | [MIT][56]                        |
-| [python-dependency-injector][57] | [@ets-labs][58]                      | [GitHub][59]               | [BSD-3-Clause][60]               |
-| [networkx][61]                   | [@networkx][62]                      | [GitHub][63]               | [BSD-3-Clause][64]               |
-| [sqlglot][65]                    | [@tobymao][66]                       | [GitHub][67]               | [MIT][68]                        |
-| [javalang-ext][69]               | [@macnev2013][70]                    | [GitHub][71]               | [MIT][72]                        |
-| [cashews][73]                    | [@Krukov][74]                        | [GitHub][75]               | [MIT][76]                        |
-| [tenacity][77]                   | [@jd][78]                            | [GitHub][79]               | [Apache-2.0][80]                 |
-| [platformdirs][81]               | [@tox-dev][82]                       | [GitHub][83]               | [MIT][84]                        |
-| [blake3-py][85]                  | [@oconnor663][86]                    | [GitHub][87]               | [CC0-1.0][88]                    |
-| [aioshutil][89]                  | [@kumaraditya303][90]                | [GitHub][91]               | [BSD-3-Clause][92]               |
-| [aiostdlib][93]                  | [@syubogdanov][94]                   | [GitHub][95]               | [MIT][96]                        |
+| Name                              | Author                                | Web-Service                 | License                           |
+|-----------------------------------|---------------------------------------|-----------------------------|-----------------------------------|
+| [Weasel Icon][001]                | [@freepik][002]                       | [Flaticon][003]             | [Flaticon][004]                   |
+| [Code of Conduct][005]            | [Coraline Ada Ehmke][006]             | [Contributor Covenant][007] | [CC BY 4.0][008]                  |
+| [GNU Make][009]                   | [Free Software Foundation, Inc.][010] | [GNU][011]                  | [GNU General Public License][012] |
+| [cpython][013]                    | [@python][014]                        | [GitHub][015]               | [PSF License][016]                |
+| [poetry][017]                     | [@python-poetry][018]                 | [GitHub][019]               | [MIT][020]                        |
+| [black][021]                      | [@psf][022]                           | [GitHub][023]               | [MIT][024]                        |
+| [mypy][025]                       | [@python][026]                        | [GitHub][027]               | [MIT][028]                        |
+| [ruff][029]                       | [@astral-sh][030]                     | [GitHub][031]               | [MIT][032]                        |
+| [pytest][033]                     | [@pytest-dev][034]                    | [GitHub][035]               | [MIT][036]                        |
+| [pytest-asyncio][037]             | [@pytest-dev][038]                    | [GitHub][039]               | [Apache-2.0][040]                 |
+| [pydantic][041]                   | [@pydantic][042]                      | [GitHub][043]               | [MIT][044]                        |
+| [Docker][045]                     | [Docker Inc.][046]                    | [Docker][047]               | [Docker Personal][048]            |
+| [shields][049]                    | [badges][050]                         | [GitHub][051]               | [CC0-1.0][052]                    |
+| [RapidFuzz][053]                  | [rapidfuzz][054]                      | [GitHub][055]               | [MIT][056]                        |
+| [python-dependency-injector][057] | [@ets-labs][058]                      | [GitHub][059]               | [BSD-3-Clause][060]               |
+| [networkx][061]                   | [@networkx][062]                      | [GitHub][063]               | [BSD-3-Clause][064]               |
+| [sqlglot][065]                    | [@tobymao][066]                       | [GitHub][067]               | [MIT][068]                        |
+| [javalang-ext][069]               | [@macnev2013][070]                    | [GitHub][071]               | [MIT][072]                        |
+| [cashews][073]                    | [@Krukov][074]                        | [GitHub][075]               | [MIT][076]                        |
+| [tenacity][077]                   | [@jd][078]                            | [GitHub][079]               | [Apache-2.0][080]                 |
+| [platformdirs][081]               | [@tox-dev][082]                       | [GitHub][083]               | [MIT][084]                        |
+| [blake3-py][085]                  | [@oconnor663][086]                    | [GitHub][087]               | [CC0-1.0][088]                    |
+| [aioshutil][089]                  | [@kumaraditya303][090]                | [GitHub][091]               | [BSD-3-Clause][092]               |
+| [aiostdlib][093]                  | [@syubogdanov][094]                   | [GitHub][095]               | [MIT][096]                        |
+| [pyyaml][097]                     | [@yaml][098]                          | [GitHub][099]               | [MIT][100]                        |
+| [toml][101]                       | [@uiri][102]                          | [GitHub][103]               | [MIT][104]                        |
 
-[01]: https://www.flaticon.com/free-icon/weasel_334982
-[02]: https://www.flaticon.com/authors/freepik
-[03]: https://www.flaticon.com/
-[04]: https://www.freepikcompany.com/legal
+[001]: https://www.flaticon.com/free-icon/weasel_334982
+[002]: https://www.flaticon.com/authors/freepik
+[003]: https://www.flaticon.com/
+[004]: https://www.freepikcompany.com/legal
 
-[05]: https://www.contributor-covenant.org/version/2/1/code_of_conduct
-[06]: https://where.coraline.codes
-[07]: https://www.contributor-covenant.org
-[08]: https://github.com/EthicalSource/contributor_covenant/blob/release/LICENSE.md
+[005]: https://www.contributor-covenant.org/version/2/1/code_of_conduct
+[006]: https://where.coraline.codes
+[007]: https://www.contributor-covenant.org
+[008]: https://github.com/EthicalSource/contributor_covenant/blob/release/LICENSE.md
 
-[09]: https://www.gnu.org/software/make
-[10]: https://www.gnu.org/software/make/#mission-statement
-[11]: https://www.gnu.org/
-[12]: https://www.gnu.org/licenses/gpl-3.0.en.html
+[009]: https://www.gnu.org/software/make
+[010]: https://www.gnu.org/software/make/#mission-statement
+[011]: https://www.gnu.org/
+[012]: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-[13]: https://github.com/python/cpython
-[14]: https://github.com/python
-[15]: https://github.com/
-[16]: https://github.com/python/cpython/blob/main/LICENSE
+[013]: https://github.com/python/cpython
+[014]: https://github.com/python
+[015]: https://github.com/
+[016]: https://github.com/python/cpython/blob/main/LICENSE
 
-[17]: https://github.com/python-poetry/poetry
-[18]: https://github.com/python-poetry
-[19]: https://github.com/
-[20]: https://github.com/python-poetry/poetry/blob/main/LICENSE
+[017]: https://github.com/python-poetry/poetry
+[018]: https://github.com/python-poetry
+[019]: https://github.com/
+[020]: https://github.com/python-poetry/poetry/blob/main/LICENSE
 
-[21]: https://github.com/psf/black
-[22]: https://github.com/psf
-[23]: https://github.com/
-[24]: https://github.com/psf/black/blob/main/LICENSE
+[021]: https://github.com/psf/black
+[022]: https://github.com/psf
+[023]: https://github.com/
+[024]: https://github.com/psf/black/blob/main/LICENSE
 
-[25]: https://github.com/python/mypy
-[26]: https://github.com/python
-[27]: https://github.com/
-[28]: https://github.com/python/mypy/blob/master/LICENSE
+[025]: https://github.com/python/mypy
+[026]: https://github.com/python
+[027]: https://github.com/
+[028]: https://github.com/python/mypy/blob/master/LICENSE
 
-[29]: https://github.com/astral-sh/ruff
-[30]: https://github.com/astral-sh
-[31]: https://github.com/
-[32]: https://github.com/astral-sh/ruff/blob/main/LICENSE
+[029]: https://github.com/astral-sh/ruff
+[030]: https://github.com/astral-sh
+[031]: https://github.com/
+[032]: https://github.com/astral-sh/ruff/blob/main/LICENSE
 
-[33]: https://github.com/pytest-dev/pytest
-[34]: https://github.com/pytest-dev
-[35]: https://github.com/
-[36]: https://github.com/pytest-dev/pytest/blob/main/LICENSE
+[033]: https://github.com/pytest-dev/pytest
+[034]: https://github.com/pytest-dev
+[035]: https://github.com/
+[036]: https://github.com/pytest-dev/pytest/blob/main/LICENSE
 
-[37]: https://github.com/pytest-dev/pytest-asyncio
-[38]: https://github.com/pytest-dev
-[39]: https://github.com/
-[40]: https://github.com/pytest-dev/pytest-asyncio/blob/main/LICENSE
+[037]: https://github.com/pytest-dev/pytest-asyncio
+[038]: https://github.com/pytest-dev
+[039]: https://github.com/
+[040]: https://github.com/pytest-dev/pytest-asyncio/blob/main/LICENSE
 
-[41]: https://github.com/pydantic/pydantic
-[42]: https://github.com/pydantic
-[43]: https://github.com/
-[44]: https://github.com/pydantic/pydantic/blob/main/LICENSE
+[041]: https://github.com/pydantic/pydantic
+[042]: https://github.com/pydantic
+[043]: https://github.com/
+[044]: https://github.com/pydantic/pydantic/blob/main/LICENSE
 
-[45]: https://www.docker.com/
-[46]: https://www.docker.com/company
-[47]: https://www.docker.com/
-[48]: https://www.docker.com/products/personal
+[045]: https://www.docker.com/
+[046]: https://www.docker.com/company
+[047]: https://www.docker.com/
+[048]: https://www.docker.com/products/personal
 
-[49]: https://github.com/badges/shields
-[50]: https://github.com/badges
-[51]: https://github.com/
-[52]: https://github.com/badges/shields/blob/master/LICENSE
+[049]: https://github.com/badges/shields
+[050]: https://github.com/badges
+[051]: https://github.com/
+[052]: https://github.com/badges/shields/blob/master/LICENSE
 
-[53]: https://github.com/rapidfuzz/RapidFuzz
-[54]: https://github.com/rapidfuzz
-[55]: https://github.com/
-[56]: https://github.com/rapidfuzz/RapidFuzz/blob/main/LICENSE
+[053]: https://github.com/rapidfuzz/RapidFuzz
+[054]: https://github.com/rapidfuzz
+[055]: https://github.com/
+[056]: https://github.com/rapidfuzz/RapidFuzz/blob/main/LICENSE
 
-[57]: https://github.com/ets-labs/python-dependency-injector
-[58]: https://github.com/ets-labs
-[59]: https://github.com/
-[60]: https://github.com/ets-labs/python-dependency-injector/blob/master/LICENSE.rst
+[057]: https://github.com/ets-labs/python-dependency-injector
+[058]: https://github.com/ets-labs
+[059]: https://github.com/
+[060]: https://github.com/ets-labs/python-dependency-injector/blob/master/LICENSE.rst
 
-[61]: https://github.com/networkx/networkx
-[62]: https://github.com/networkx
-[63]: https://github.com/
-[64]: https://github.com/networkx/networkx/blob/main/LICENSE.txt
+[061]: https://github.com/networkx/networkx
+[062]: https://github.com/networkx
+[063]: https://github.com/
+[064]: https://github.com/networkx/networkx/blob/main/LICENSE.txt
 
-[65]: https://github.com/tobymao/sqlglot
-[66]: https://github.com/tobymao
-[67]: https://github.com/
-[68]: https://github.com/tobymao/sqlglot/blob/main/LICENSE
+[065]: https://github.com/tobymao/sqlglot
+[066]: https://github.com/tobymao
+[067]: https://github.com/
+[068]: https://github.com/tobymao/sqlglot/blob/main/LICENSE
 
-[69]: https://github.com/macnev2013/javalang-ext
-[70]: https://github.com/macnev2013
-[71]: https://github.com/
-[72]: https://github.com/macnev2013/javalang-ext/blob/master/LICENSE.txt
+[069]: https://github.com/macnev2013/javalang-ext
+[070]: https://github.com/macnev2013
+[071]: https://github.com/
+[072]: https://github.com/macnev2013/javalang-ext/blob/master/LICENSE.txt
 
-[73]: https://github.com/Krukov/cashews
-[74]: https://github.com/Krukov
-[75]: https://github.com/
-[76]: https://github.com/Krukov/cashews/blob/master/LICENSE
+[073]: https://github.com/Krukov/cashews
+[074]: https://github.com/Krukov
+[075]: https://github.com/
+[076]: https://github.com/Krukov/cashews/blob/master/LICENSE
 
-[77]: https://github.com/jd/tenacity
-[78]: https://github.com/jd
-[79]: https://github.com/
-[80]: https://github.com/jd/tenacity/blob/main/LICENSE
+[077]: https://github.com/jd/tenacity
+[078]: https://github.com/jd
+[079]: https://github.com/
+[080]: https://github.com/jd/tenacity/blob/main/LICENSE
 
-[81]: https://github.com/tox-dev/platformdirs
-[82]: https://github.com/tox-dev
-[83]: https://github.com/
-[84]: https://github.com/tox-dev/platformdirs/blob/main/LICENSE
+[081]: https://github.com/tox-dev/platformdirs
+[082]: https://github.com/tox-dev
+[083]: https://github.com/
+[084]: https://github.com/tox-dev/platformdirs/blob/main/LICENSE
 
-[85]: https://github.com/oconnor663/blake3-py
-[86]: https://github.com/oconnor663
-[87]: https://github.com/
-[88]: https://github.com/oconnor663/blake3-py/blob/master/LICENSE
+[085]: https://github.com/oconnor663/blake3-py
+[086]: https://github.com/oconnor663
+[087]: https://github.com/
+[088]: https://github.com/oconnor663/blake3-py/blob/master/LICENSE
 
-[89]: https://github.com/kumaraditya303/aioshutil
-[90]: https://github.com/kumaraditya303
-[91]: https://github.com/
-[92]: https://github.com/kumaraditya303/aioshutil/blob/master/LICENSE.md
+[089]: https://github.com/kumaraditya303/aioshutil
+[090]: https://github.com/kumaraditya303
+[091]: https://github.com/
+[092]: https://github.com/kumaraditya303/aioshutil/blob/master/LICENSE.md
 
-[93]: https://github.com/syubogdanov/aiostdlib
-[94]: https://github.com/syubogdanov
-[95]: https://github.com/
-[96]: https://github.com/syubogdanov/aiostdlib/blob/main/LICENSE
+[093]: https://github.com/syubogdanov/aiostdlib
+[094]: https://github.com/syubogdanov
+[095]: https://github.com/
+[096]: https://github.com/syubogdanov/aiostdlib/blob/main/LICENSE
+
+[097]: https://github.com/yaml/pyyaml
+[098]: https://github.com/yaml
+[099]: https://github.com/
+[100]: https://github.com/yaml/pyyaml/blob/main/LICENSE
+
+[101]: https://github.com/uiri/toml
+[102]: https://github.com/uiri
+[103]: https://github.com/
+[104]: https://github.com/uiri/toml/blob/master/LICENSE
