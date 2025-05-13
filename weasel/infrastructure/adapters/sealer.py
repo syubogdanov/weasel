@@ -44,13 +44,13 @@ class SealerAdapter(SealerInterface):
 
         identifier = self._id_factory()
         seal = self._seal_dir / identifier.hex
-        await os.makedirs(seal)
 
         if S_ISREG(st.st_mode):
-            await copy2(path, seal / path.name)
+            await os.makedirs(seal)
+            await copy2(path, seal / path.name, follow_symlinks=False)
 
         if S_ISDIR(st.st_mode):
-            await copytree(path, seal / path.name, symlinks=False, ignore_dangling_symlinks=True)
+            await copytree(path, seal, symlinks=False, ignore_dangling_symlinks=True)
 
         return seal
 
