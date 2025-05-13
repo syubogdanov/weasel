@@ -56,4 +56,4 @@ class SealerAdapter(SealerInterface):
 
     async def clean(self) -> None:
         """Clean the sealing layer."""
-        await rmtree(self._seal_dir, ignore_errors=True)
+        await rmtree(self._seal_dir, ignore_errors=True)  # type: ignore[call-arg]

@@ -4,10 +4,10 @@ from uuid import UUID, uuid4
 from dependency_injector.containers import DeclarativeContainer
 from dependency_injector.providers import Factory, List, Provider, Selector, Singleton
 
-from weasel.domain.services.mutation_tree import MutationTree
 from weasel.infrastructure.adapters.cache import CacheAdapter
 from weasel.infrastructure.adapters.cashews.cache import CacheCashewsAdapter
 from weasel.infrastructure.adapters.hash import HashAdapter
+from weasel.infrastructure.adapters.mutation_tree import MutationTreeAdapter
 from weasel.infrastructure.adapters.sealer import SealerAdapter
 from weasel.infrastructure.estimators.damerau_levenshtein import DamerauLevenshteinEstimator
 from weasel.infrastructure.estimators.jaro_winkler import JaroWinklerEstimator
@@ -35,6 +35,7 @@ if TYPE_CHECKING:
     from weasel.domain.services.interfaces.hash import HashInterface
     from weasel.domain.services.interfaces.language import LanguageInterface
     from weasel.domain.services.interfaces.mutation import MutationInterface
+    from weasel.domain.services.interfaces.mutation_tree import MutationTreeInterface
     from weasel.domain.services.interfaces.sealer import SealerInterface
 
 
@@ -127,32 +128,32 @@ class WeaselContainer(DeclarativeContainer):
     )
     sql_mutations: Provider[list["MutationInterface"]] = List()
 
-    java_mutation_tree: Provider["MutationTree"] = Singleton(
-        MutationTree,
+    java_mutation_tree: Provider["MutationTreeInterface"] = Singleton(
+        MutationTreeAdapter,
         _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
         _depth=mutation_tree_settings.provided.depth,
         _estimator=estimator.provided,
         _mutations=java_mutations.provided,
         _tolerance=mutation_tree_settings.provided.tolerance,
     )
-    python_mutation_tree: Provider["MutationTree"] = Singleton(
-        MutationTree,
+    python_mutation_tree: Provider["MutationTreeInterface"] = Singleton(
+        MutationTreeAdapter,
         _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
         _depth=mutation_tree_settings.provided.depth,
         _estimator=estimator.provided,
         _mutations=python_mutations.provided,
         _tolerance=mutation_tree_settings.provided.tolerance,
     )
-    starlark_mutation_tree: Provider["MutationTree"] = Singleton(
-        MutationTree,
+    starlark_mutation_tree: Provider["MutationTreeInterface"] = Singleton(
+        MutationTreeAdapter,
         _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
         _depth=mutation_tree_settings.provided.depth,
         _estimator=estimator.provided,
         _mutations=starlark_mutations.provided,
         _tolerance=mutation_tree_settings.provided.tolerance,
     )
-    sql_mutation_tree: Provider["MutationTree"] = Singleton(
-        MutationTree,
+    sql_mutation_tree: Provider["MutationTreeInterface"] = Singleton(
+        MutationTreeAdapter,
         _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
         _depth=mutation_tree_settings.provided.depth,
         _estimator=estimator.provided,

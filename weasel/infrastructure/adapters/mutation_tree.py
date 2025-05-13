@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from heapq import nlargest
 from typing import TYPE_CHECKING
 
+from weasel.domain.services.interfaces.mutation_tree import MutationTreeInterface
+
 
 if TYPE_CHECKING:
     from weasel.domain.services.interfaces.estimator import EstimatorInterface
@@ -9,8 +11,8 @@ if TYPE_CHECKING:
 
 
 @dataclass
-class MutationTree:
-    """The mutation tree."""
+class MutationTreeAdapter(MutationTreeInterface):
+    """The greedy mutation tree."""
 
     _degree_of_freedom: int
     _depth: int

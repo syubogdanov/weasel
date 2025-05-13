@@ -24,4 +24,4 @@ class DamerauLevenshteinEstimator(EstimatorInterface):
         -----
         * `rapidfuzz` is written in *C++*.
         """
-        return asyncio.to_thread(normalized_similarity, source, target)
+        return await asyncio.to_thread(normalized_similarity, source, target)

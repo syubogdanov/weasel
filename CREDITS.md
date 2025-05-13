@@ -28,6 +28,7 @@
 | [aiostdlib][093]                  | [@syubogdanov][094]                   | [GitHub][095]               | [MIT][096]                        |
 | [pyyaml][097]                     | [@yaml][098]                          | [GitHub][099]               | [MIT][100]                        |
 | [toml][101]                       | [@uiri][102]                          | [GitHub][103]               | [MIT][104]                        |
+| [typeshed][105]                   | [@python][106]                        | [GitHub][107]               | [Apache-2.0][108]                 |
 
 [001]: https://www.flaticon.com/free-icon/weasel_334982
 [002]: https://www.flaticon.com/authors/freepik
@@ -158,3 +159,8 @@
 [102]: https://github.com/uiri
 [103]: https://github.com/
 [104]: https://github.com/uiri/toml/blob/master/LICENSE
+
+[105]: https://github.com/python/typeshed
+[106]: https://github.com/python
+[107]: https://github.com/
+[108]: https://github.com/python/typeshed/blob/main/LICENSE
