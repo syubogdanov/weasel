@@ -61,7 +61,7 @@ class WeaselContainer(DeclarativeContainer):
         CacheAdapter, _cashews=cache_cashews_adapter.provided
     )
     hash_adapter: Provider["HashInterface"] = Singleton(
-        HashAdapter, _max_threads=system_settings.provided.workers
+        HashAdapter, _max_threads=system_settings.provided.max_workers
     )
     sealer_adapter: Provider["SealerInterface"] = Singleton(
         SealerAdapter,

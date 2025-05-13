@@ -7,11 +7,11 @@ class SystemSettings(BaseModel):
     """The system settings."""
 
     @property
-    def threads(self) -> int:
-        """Get the number of threads."""
+    def max_threads(self) -> int:
+        """Get the maximum number of threads."""
         return cpu_count() or 1
 
     @property
-    def workers(self) -> int:
-        """Get the number of workers."""
-        return min(self.threads + 4, 32)
+    def max_workers(self) -> int:
+        """Get the maximum number of workers."""
+        return min(self.max_threads + 4, 32)
