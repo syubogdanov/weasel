@@ -15,5 +15,5 @@ class CacheSettings(BaseModel):
 
     @property
     def uri(self) -> str:
-        """Get the base URI."""
+        """Get the URI."""
         return "disk://"
