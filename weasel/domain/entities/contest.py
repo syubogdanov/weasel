@@ -4,7 +4,7 @@ from typing import Self
 import toml
 import yaml
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
 
 from weasel.domain.entities.task import TaskEntity
 
@@ -12,9 +12,21 @@ from weasel.domain.entities.task import TaskEntity
 class ContestEntity(BaseModel):
     """The contest entity."""
 
-    workflows: list[TaskEntity]
+    tasks: list[TaskEntity]
 
     model_config = ConfigDict(from_attributes=True)
+
+    @field_validator("tasks", mode="before")
+    @classmethod
+    def ensure_unique_names(cls, tasks: list["TaskEntity"]) -> list["TaskEntity"]:
+        """Ensure that task names are unique."""
+        task_names = {task.name for task in tasks}
+
+        if len(task_names) != len(tasks):
+            detail = "The task names must be unique"
+            raise ValueError(detail)
+
+        return tasks
 
     @classmethod
     def from_json(cls, path: Path, encoding: str = "utf-8") -> Self:
