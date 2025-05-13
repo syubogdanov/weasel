@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Self
 
 from platformdirs import site_cache_dir, site_config_dir, site_data_dir
-from pydantic import BaseModel
+from pydantic import BaseModel, PositiveInt
 
 
 class Poetry(BaseModel):
@@ -42,6 +42,8 @@ class PyProject(BaseModel):
 
 class ServiceSettings(BaseModel):
     """The service settings."""
+
+    precision: PositiveInt = 3
 
     @cached_property
     def pyproject(self) -> PyProject:

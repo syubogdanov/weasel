@@ -16,12 +16,14 @@ if TYPE_CHECKING:
 class LevenshteinEstimator(EstimatorInterface):
     """The Levenshtein estimator."""
 
-    @classmethod
-    async def estimate(cls, source: str, target: str) -> "Probability":
+    _precision: int
+
+    async def estimate(self, source: str, target: str) -> "Probability":
         """Estimate whether `source` is derived from `target`.
 
         Notes
         -----
         * `rapidfuzz` is written in *C++*.
         """
-        return await asyncio.to_thread(normalized_similarity, source, target)
+        score = await asyncio.to_thread(normalized_similarity, source, target)
+        return round(score, self._precision)
