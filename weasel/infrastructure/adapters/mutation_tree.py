@@ -1,3 +1,5 @@
+import asyncio
+
 from dataclasses import dataclass
 from heapq import nlargest
 from typing import TYPE_CHECKING
@@ -33,19 +35,18 @@ class MutationTreeAdapter(MutationTreeInterface):
         if not self._degree_of_freedom:
             return options
 
-        scores: list[tuple[MutationInterface, float]] = []
+        coroutines = [self._compare(source, target, mutation) for mutation in self._mutations]
+        scores = await asyncio.gather(*coroutines)
 
-        for mutation in self._mutations:
-            if mutation not in options.mutations:
-                mutated = await mutation.mutate(source, target)
-                score = await self._estimator.estimate(mutated, target)
-                if score > options.score + self._tolerance:
-                    pair = (mutation, score)
-                    scores.append(pair)
+        candidates = [
+            (mutation, score)
+            for mutation, score in zip(self._mutations, scores, strict=True)
+            if score > options.score + self._tolerance
+        ]
 
         optimums: list[DFSOptions] = []
 
-        for mutation, score in nlargest(self._degree_of_freedom, scores, key=lambda p: p[1]):
+        for mutation, score in nlargest(self._degree_of_freedom, candidates, key=lambda p: p[1]):
             mutated = await mutation.mutate(source, target)
 
             next_mutations = [*options.mutations, mutation]
@@ -55,6 +56,11 @@ class MutationTreeAdapter(MutationTreeInterface):
             optimums.append(optimum)
 
         return max(optimums, key=lambda o: o.score, default=options)
+
+    async def _compare(self, source: str, target: str, mutation: "MutationInterface") -> float:
+        """Compare `source` and `target` using `mutation`."""
+        mutated = await mutation.mutate(source, target)
+        return await self._estimator.estimate(mutated, target)
 
 
 @dataclass
