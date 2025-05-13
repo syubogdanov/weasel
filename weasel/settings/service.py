@@ -14,6 +14,13 @@ class Poetry(BaseModel):
     name: str
     version: str
 
+    license: str
+    authors: list[str]
+
+    documentation: str
+    homepage: str
+    repository: str
+
 
 class Tool(BaseModel):
     """The `tool` section."""
@@ -27,7 +34,7 @@ class PyProject(BaseModel):
     tool: Tool
 
     @classmethod
-    def from_path(cls, path: Path) -> Self:
+    def load(cls, path: Path) -> Self:
         """Load the `pyproject.toml` file."""
         with Path(path).open(mode="rb") as file:
             return cls(**tomllib.load(file))
@@ -41,7 +48,7 @@ class ServiceSettings(BaseModel):
         """Get the `pyproject.toml` file."""
         base_dir = Path(__file__).parent.parent.parent
         path = base_dir / "pyproject.toml"
-        return PyProject.from_path(path)
+        return PyProject.load(path)
 
     @property
     def name(self) -> str:
@@ -54,16 +61,41 @@ class ServiceSettings(BaseModel):
         return self.pyproject.tool.poetry.version
 
     @property
+    def authors(self) -> list[str]:
+        """Get the service authors."""
+        return self.pyproject.tool.poetry.authors
+
+    @property
+    def license(self) -> str:
+        """Get the service license."""
+        return self.pyproject.tool.poetry.license
+
+    @property
+    def documentation(self) -> str:
+        """Get the service documentation URL."""
+        return self.pyproject.tool.poetry.documentation
+
+    @property
+    def homepage(self) -> str:
+        """Get the service homepage URL."""
+        return self.pyproject.tool.poetry.homepage
+
+    @property
+    def repository(self) -> str:
+        """Get the service repository URL."""
+        return self.pyproject.tool.poetry.repository
+
+    @cached_property
     def cache_directory(self) -> Path:
         """Get the cache directory."""
         return Path(site_cache_dir(appname=self.name, version=self.version))
 
-    @property
+    @cached_property
     def config_directory(self) -> Path:
         """Get the config directory."""
         return Path(site_config_dir(appname=self.name, version=self.version))
 
-    @property
+    @cached_property
     def data_directory(self) -> Path:
         """Get the data directory."""
         return Path(site_data_dir(appname=self.name, version=self.version))
