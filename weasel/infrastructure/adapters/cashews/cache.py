@@ -48,3 +48,13 @@ class CacheCashewsAdapter:
         except Exception as exception:
             detail = "Failed to set the key-value in the cache"
             raise WeaselCacheError(detail) from exception
+
+    @retry_cashews
+    async def clean(self) -> None:
+        """Clean the cache."""
+        try:
+            await cache.clear()
+
+        except Exception as exception:
+            detail = "Failed to clean up the cache"
+            raise WeaselCacheError(detail) from exception

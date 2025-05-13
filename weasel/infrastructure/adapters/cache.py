@@ -24,6 +24,10 @@ class CacheAdapter(CacheInterface):
         primary_key = self._build_key(bucket, key)
         await self._cashews.put(primary_key, value)
 
+    async def clean(self) -> None:
+        """Clean the cache."""
+        await self._cashews.clean()
+
     @classmethod
     def _build_key(cls, bucket: str, key: str) -> str:
         """Build the *Cashews* key."""

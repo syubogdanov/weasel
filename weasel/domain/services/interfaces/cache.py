@@ -12,3 +12,7 @@ class CacheInterface(Protocol):
     @abstractmethod
     async def put(self, bucket: str, key: str, value: str) -> None:
         """Put the value for `key`."""
+
+    @abstractmethod
+    async def clean(self) -> None:
+        """Clean the cache."""
