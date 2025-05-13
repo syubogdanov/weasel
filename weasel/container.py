@@ -2,8 +2,9 @@ from typing import TYPE_CHECKING
 from uuid import UUID, uuid4
 
 from dependency_injector.containers import DeclarativeContainer
-from dependency_injector.providers import Factory, List, Provider, Selector, Singleton
+from dependency_injector.providers import Dict, Factory, List, Provider, Selector, Singleton
 
+from weasel.domain.types.language import LanguageType
 from weasel.infrastructure.adapters.cache import CacheAdapter
 from weasel.infrastructure.adapters.cashews.cache import CacheCashewsAdapter
 from weasel.infrastructure.adapters.hash import HashAdapter
@@ -81,6 +82,13 @@ class WeaselContainer(DeclarativeContainer):
     python_language: Provider["LanguageInterface"] = Singleton(PythonLanguage)
     sql_language: Provider["LanguageInterface"] = Singleton(SQLLanguage)
     starlark_language: Provider["LanguageInterface"] = Singleton(StarlarkLanguage)
+
+    languages: Provider[list["LanguageInterface"]] = List(
+        java_language.provided,
+        python_language.provided,
+        sql_language.provided,
+        starlark_language.provided,
+    )
 
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
         DamerauLevenshteinEstimator,
@@ -172,6 +180,13 @@ class WeaselContainer(DeclarativeContainer):
         _estimator=estimator.provided,
         _mutations=sql_mutations.provided,
         _tolerance=mutation_tree_settings.provided.tolerance,
+    )
+
+    mutation_trees: Provider[dict[LanguageType, "MutationTreeInterface"]] = Dict(
+        java=java_mutation_tree.provided,
+        python=python_mutation_tree.provided,
+        starlark=starlark_mutation_tree.provided,
+        sql=sql_mutation_tree.provided,
     )
 
 
