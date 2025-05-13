@@ -16,9 +16,18 @@ class ContestEntity(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-    @field_validator("tasks", mode="before")
+    @field_validator("tasks", mode="after")
     @classmethod
-    def ensure_unique_names(cls, tasks: list["TaskEntity"]) -> list["TaskEntity"]:
+    def ensure_at_least_one_task(cls, tasks: list["TaskEntity"]) -> list["TaskEntity"]:
+        """Ensure that there is at least one task."""
+        if not tasks:
+            detail = "There must be at least one task"
+            raise ValueError(detail)
+        return tasks
+
+    @field_validator("tasks", mode="after")
+    @classmethod
+    def ensure_unique_task_names(cls, tasks: list["TaskEntity"]) -> list["TaskEntity"]:
         """Ensure that task names are unique."""
         task_names = {task.name for task in tasks}
 

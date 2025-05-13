@@ -3,7 +3,6 @@ import statistics
 from dataclasses import dataclass
 from functools import reduce
 from operator import mul
-from typing import ClassVar
 
 from weasel.domain.entities.metrics import MetricsEntity
 from weasel.domain.services.interfaces.metrics import MetricsInterface
@@ -14,8 +13,6 @@ class MetricsAdapter(MetricsInterface):
     """The metrics adapter."""
 
     _precision: int
-
-    _nolie_optimum: ClassVar[float] = 0.5
 
     def calculate(self, probabilities: list[float]) -> "MetricsEntity":
         """Calculate metrics based on probabilities."""
@@ -104,10 +101,10 @@ class MetricsAdapter(MetricsInterface):
         if not probabilities:
             return 0.0
 
-        if (maximum := max(probabilities)) < self._nolie_optimum:
+        if (maximum := max(probabilities)) < 0.5:
             return round(maximum, self._precision)
 
-        plus = [proba for proba in probabilities if proba >= self._nolie_optimum]
+        plus = [proba for proba in probabilities if proba >= 0.5]
         minus = [1.0 - proba for proba in plus]
 
         numerator = reduce(mul, plus)

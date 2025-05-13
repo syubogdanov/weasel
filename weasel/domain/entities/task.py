@@ -13,8 +13,16 @@ class TaskEntity(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-    @model_validator(mode="before")
-    def ensure_unique_names(self) -> Self:
+    @model_validator(mode="after")
+    def ensure_at_least_two_submissions(self) -> Self:
+        """Ensure that there are at least two submissions."""
+        if len(self.submissions) < 2:
+            detail = f"There must be at least two submissions ({self.name!r})"
+            raise ValueError(detail)
+        return self
+
+    @model_validator(mode="after")
+    def ensure_unique_submission_names(self) -> Self:
         """Ensure that submission names are unique."""
         submission_names = {submission.name for submission in self.submissions}
 
