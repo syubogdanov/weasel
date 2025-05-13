@@ -20,3 +20,8 @@ class JavaMutation(MutationInterface):
     async def mutate(cls, source: str, target: str) -> str:  # noqa: ARG003
         """Mutate `source` using `target` as the reference."""
         return unparse(parse(source)).lstrip()
+
+    @classmethod
+    def as_label(cls) -> str:
+        """Return the mutation label."""
+        return "JAVA001"

@@ -42,6 +42,11 @@ class PythonMutation(MutationInterface):
         tree = ast.fix_missing_locations(tree)
         return ast.unparse(tree)
 
+    @classmethod
+    def as_label(cls) -> str:
+        """Return the mutation label."""
+        return "PY006"
+
 
 @dataclass
 class PythonReorderer:

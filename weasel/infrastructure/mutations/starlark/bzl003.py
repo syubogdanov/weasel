@@ -15,3 +15,8 @@ class StarlarkMutation(PythonMutation):
     --------
     * `PY004`.
     """
+
+    @classmethod
+    def as_label(cls) -> str:
+        """Return the mutation label."""
+        return "BZL003"

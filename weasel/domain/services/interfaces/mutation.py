@@ -8,3 +8,8 @@ class MutationInterface(Protocol):
     @abstractmethod
     async def mutate(self, source: str, target: str) -> str:
         """Mutate `source` using `target` as the reference."""
+
+    @abstractmethod
+    @classmethod
+    def as_label(cls) -> str:
+        """Return the mutation label."""

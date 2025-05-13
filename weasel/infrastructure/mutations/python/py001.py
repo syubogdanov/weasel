@@ -7,7 +7,7 @@ from weasel.domain.services.interfaces.mutation import MutationInterface
 
 @dataclass
 class PythonMutation(MutationInterface):
-    """The *Python* mutation (`P001`).
+    """The *Python* mutation (`PY001`).
 
     Features
     --------
@@ -20,3 +20,8 @@ class PythonMutation(MutationInterface):
     async def mutate(cls, source: str, target: str) -> str:  # noqa: ARG003
         """Mutate `source` using `target` as the reference."""
         return ast.unparse(ast.parse(source))
+
+    @classmethod
+    def as_label(cls) -> str:
+        """Return the mutation label."""
+        return "PY001"
