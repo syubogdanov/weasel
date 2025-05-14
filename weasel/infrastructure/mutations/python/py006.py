@@ -74,8 +74,11 @@ class PythonReorderer:
 
     async def _reorder_list(self, source: list[ast.AST], target: list[ast.AST]) -> list[ast.AST]:
         """Reorder `source` using `target` as the reference."""
-        source_blocks = self._split_into_blocks(source)
-        target_blocks = self._split_into_blocks(target)
+        if not (source_blocks := self._split_into_blocks(source)):
+            return []
+
+        if not (target_blocks := self._split_into_blocks(target)):
+            return source
 
         matchings = await self._match_blocks(source_blocks, target_blocks)
 

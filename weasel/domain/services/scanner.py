@@ -55,8 +55,17 @@ class ScannerService:
         return ReportEntity(reviews=reviews)
 
     async def _review(self, task: "TaskEntity") -> "ReviewEntity":
-        """Review the task."""
-        coroutines = [self._compare(s1, s2) for s1, s2 in combinations(task.submissions, r=2)]
+        """Review the task.
+
+        Notes
+        -----
+        * Comparisons are asymmetric.
+        """
+        coroutines = [
+            coroutine
+            for s1, s2 in combinations(task.submissions, r=2)
+            for coroutine in (self._compare(s1, s2), self._compare(s2, s1))
+        ]
         comparisons = await asyncio.gather(*coroutines)
         return ReviewEntity(name=task.name, comparisons=comparisons)
 
@@ -77,7 +86,13 @@ class ScannerService:
             aclosing(self._iterate_over_files(s2.path)) as target_files,
         ):
             matches = [
-                match
+                MatchEntity(
+                    source=match.source.relative_to(s1.path),
+                    target=match.target.relative_to(s2.path),
+                    language=match.language,
+                    probability=match.probability,
+                    labels=match.labels,
+                )
                 async for source_file in source_files
                 async for target_file in target_files
                 if (match := await self._maybe_match(source_file, target_file))

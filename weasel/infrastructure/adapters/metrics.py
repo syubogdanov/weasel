@@ -19,7 +19,6 @@ class MetricsAdapter(MetricsInterface):
         return MetricsEntity(
             nolie=self._calculate_nolie(probabilities),
             mean=self._calculate_mean(probabilities),
-            gmean=self._calculate_gmean(probabilities),
             median=self._calculate_median(probabilities),
             min=self._calculate_min(probabilities),
             max=self._calculate_max(probabilities),
@@ -35,11 +34,6 @@ class MetricsAdapter(MetricsInterface):
     def _calculate_mean(self, probabilities: list[float]) -> float:
         """Calculate the mean."""
         value = statistics.mean(probabilities) if probabilities else 0.0
-        return round(value, self._precision)
-
-    def _calculate_gmean(self, probabilities: list[float]) -> float:
-        """Calculate the geometric mean."""
-        value = statistics.geometric_mean(probabilities) if probabilities else 0.0
         return round(value, self._precision)
 
     def _calculate_median(self, probabilities: list[float]) -> float:

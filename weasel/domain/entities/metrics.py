@@ -6,7 +6,6 @@ class MetricsEntity(BaseModel):
 
     nolie: NonNegativeFloat
     mean: NonNegativeFloat
-    gmean: NonNegativeFloat
     median: NonNegativeFloat
     min: NonNegativeFloat
     max: NonNegativeFloat
