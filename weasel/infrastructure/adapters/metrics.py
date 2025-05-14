@@ -59,12 +59,18 @@ class MetricsAdapter(MetricsInterface):
 
     def _calculate_var(self, probabilities: list[float]) -> float:
         """Calculate the variance."""
-        value = statistics.variance(probabilities) if probabilities else 0.0
+        if len(probabilities) < 2:
+            return 0.0
+
+        value = statistics.variance(probabilities)
         return round(value, self._precision)
 
     def _calculate_std(self, probabilities: list[float]) -> float:
         """Calculate the standard deviation."""
-        value = statistics.stdev(probabilities) if probabilities else 0.0
+        if len(probabilities) < 2:
+            return 0.0
+
+        value = statistics.stdev(probabilities)
         return round(value, self._precision)
 
     def _calculate_p75(self, probabilities: list[float]) -> float:
