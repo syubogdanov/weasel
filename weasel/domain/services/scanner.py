@@ -75,21 +75,27 @@ class ScannerService:
             detail = "The submissions seem to be broken..."
             raise ValueError(detail)
 
-        matches: list[MatchEntity] = []
+        source_files, target_files = await asyncio.gather(
+            self._list_files(s1.path), self._list_files(s2.path)
+        )
 
-        async with aclosing(self._iterate_over_files(s1.path)) as source_files:
-            async for source_file in source_files:
-                async with aclosing(self._iterate_over_files(s2.path)) as target_files:
-                    async for target_file in target_files:
-                        if match := await self._maybe_match(source_file, target_file):
-                            match = MatchEntity(
-                                source=match.source.relative_to(s1.path),
-                                target=match.target.relative_to(s2.path),
-                                language=match.language,
-                                probability=match.probability,
-                                labels=match.labels,
-                            )
-                            matches.append(match)
+        coroutines = [
+            self._maybe_match(source_file, target_file)
+            for source_file in source_files
+            for target_file in target_files
+        ]
+
+        matches = [
+            MatchEntity(
+                source=maybe_match.source.relative_to(s1.path),
+                target=maybe_match.target.relative_to(s2.path),
+                language=maybe_match.language,
+                probability=maybe_match.probability,
+                labels=maybe_match.labels,
+            )
+            for maybe_match in await asyncio.gather(*coroutines)
+            if maybe_match
+        ]
 
         probabilities = [match.probability for match in matches]
         metrics = self._metrics.calculate(probabilities)
@@ -179,6 +185,12 @@ class ScannerService:
     async def _read_file(cls, path: Path) -> str:
         """Read the file."""
         return await asyncio.to_thread(path.read_text, encoding=cls._encoding, errors=cls._errors)
+
+    @classmethod
+    async def _list_files(cls, dirpath: Path) -> list[Path]:
+        """List the directory files."""
+        async with aclosing(cls._iterate_over_files(dirpath)) as files:
+            return [file async for file in files]
 
     @classmethod
     async def _iterate_over_files(cls, dirpath: Path) -> AsyncGenerator[Path]:
