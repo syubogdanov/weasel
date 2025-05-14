@@ -166,3 +166,6 @@ extend-ignore-names = [
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
+
+[tool.ruff.lint.pylint]
+allow-magic-value-types = ["bytes", "float", "int", "str"]
