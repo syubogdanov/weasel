@@ -1,5 +1,9 @@
 from abc import abstractmethod
-from typing import Protocol
+from typing import TYPE_CHECKING, Protocol
+
+
+if TYPE_CHECKING:
+    from weasel.domain.types.language import LanguageType
 
 
 class LanguageInterface(Protocol):
@@ -12,3 +16,7 @@ class LanguageInterface(Protocol):
     @abstractmethod
     def get_extensions(self) -> set[str]:
         """List the extensions of the language."""
+
+    @abstractmethod
+    def as_type(self) -> "LanguageType":
+        """Get the language type."""

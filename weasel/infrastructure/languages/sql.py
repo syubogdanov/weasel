@@ -4,6 +4,7 @@ from sqlglot import parse
 from sqlglot.errors import ParseError
 
 from weasel.domain.services.interfaces.language import LanguageInterface
+from weasel.domain.types.language import LanguageType
 
 
 @dataclass
@@ -23,3 +24,8 @@ class SQLLanguage(LanguageInterface):
     def get_extensions(cls) -> set[str]:
         """List the language extensions."""
         return {".ddl", ".dml", ".sql"}
+
+    @classmethod
+    def as_type(cls) -> LanguageType:
+        """Get the language type."""
+        return LanguageType.SQL
