@@ -1,5 +1,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass
+from functools import cached_property
+from os import PathLike
 from pathlib import Path
 from stat import S_ISDIR, S_ISLNK, S_ISREG
 from typing import TYPE_CHECKING
@@ -70,7 +72,27 @@ class SealerAdapter(SealerInterface):
         """Clean the sealing layer."""
         await rmtree(self._seal_dir, ignore_errors=True)  # type: ignore[call-arg]
 
-    def _ignore(self, _dirname: str, files: list[str]) -> bool:
+    def _ignore(self, root: str, names: list[str]) -> set[str]:
         """Ignore specific patterns when copying trees."""
-        suffixes = [suffix for language in self._languages for suffix in language.get_extensions()]
-        return [file for file in files if Path(file).suffix not in suffixes]
+        if self._is_ignorable(root):
+            return set()
+        return [name for name in names if self._is_ignorable(name)]
+
+    def _is_ignorable(self, pathlike: PathLike[str]) -> bool:
+        """Ignore specific patterns when copying trees."""
+        path = Path(pathlike)
+
+        if path.name.startswith("."):
+            return True
+
+        if path.name in {"__pycache__"}:
+            return True
+
+        return path.suffix and (path.suffix not in self._supported_extensions)
+
+    @cached_property
+    def _supported_extensions(self) -> set[str]:
+        """Get the supported extensions."""
+        return {
+            extension for language in self._languages for extension in language.get_extensions()
+        }
