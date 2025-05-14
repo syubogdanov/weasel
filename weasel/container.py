@@ -4,6 +4,7 @@ from uuid import UUID, uuid4
 from dependency_injector.containers import DeclarativeContainer
 from dependency_injector.providers import Dict, Factory, List, Provider, Selector, Singleton
 
+from weasel.domain.services.scanner import ScannerService
 from weasel.domain.types.language import LanguageType
 from weasel.infrastructure.adapters.cache import CacheAdapter
 from weasel.infrastructure.adapters.cashews.cache import CacheCashewsAdapter
@@ -192,6 +193,18 @@ class WeaselContainer(DeclarativeContainer):
         python=python_mutation_tree.provided,
         starlark=starlark_mutation_tree.provided,
         sql=sql_mutation_tree.provided,
+    )
+
+    scanner: Provider["ScannerService"] = Singleton(
+        ScannerService,
+        _bitbucket=bitbucket_adapter.provided,
+        _concurrency=system_settings.provided.max_workers,
+        _estimator=estimator.provided,
+        _github=github_adapter.provided,
+        _languages=languages.provided,
+        _metrics=metrics_adapter.provided,
+        _mutation_trees=mutation_trees.provided,
+        _sealer=sealer_adapter.provided,
     )
 
 

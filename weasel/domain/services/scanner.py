@@ -1,5 +1,8 @@
 import asyncio
+import os
 
+from collections.abc import AsyncGenerator
+from contextlib import aclosing
 from dataclasses import dataclass
 from itertools import combinations
 from pathlib import Path
@@ -18,6 +21,7 @@ if TYPE_CHECKING:
     from weasel.domain.services.interfaces.estimator import EstimatorInterface
     from weasel.domain.services.interfaces.git import GitInterface
     from weasel.domain.services.interfaces.language import LanguageInterface
+    from weasel.domain.services.interfaces.metrics import MetricsInterface
     from weasel.domain.services.interfaces.mutation_tree import MutationTreeInterface
     from weasel.domain.services.interfaces.sealer import SealerInterface
     from weasel.domain.types.language import LanguageType
@@ -28,14 +32,20 @@ class ScannerService:
     """The scanner service."""
 
     _bitbucket: "GitInterface"
+    _concurrency: int
     _estimator: "EstimatorInterface"
     _github: "GitInterface"
     _languages: list["LanguageInterface"]
+    _metrics: "MetricsInterface"
     _mutation_trees: dict["LanguageType", "MutationTreeInterface"]
     _sealer: "SealerInterface"
 
     _encoding: ClassVar[str] = "utf-8"
     _errors: ClassVar[str] = "replace"
+
+    def __post_init__(self) -> None:
+        """Initialize the object."""
+        self._semaphore = asyncio.Semaphore(self._concurrency)
 
     async def scan(self, contest: "ContestEntity") -> "ReportEntity":
         """Scan the contest and return a report."""
@@ -51,13 +61,32 @@ class ScannerService:
         return ReviewEntity(name=task.name, comparisons=comparisons)
 
     async def _compare(self, s1: "SubmissionEntity", s2: "SubmissionEntity") -> "ComparisonEntity":
-        """Compare submissions."""
-        return ComparisonEntity(
-            source=s1.name,
-            target=s2.name,
-            metrics=...,
-            matches=[],
-        )
+        """Compare submissions.
+
+        Notes
+        -----
+        * Limit the number of concurrent tasks to avoid memory issues.
+        """
+        if not s1.path or not s2.path:
+            detail = "The submissions seem to be broken..."
+            raise ValueError(detail)
+
+        async with (
+            self._semaphore,
+            aclosing(self._iterate_over_files(s1.path)) as source_files,
+            aclosing(self._iterate_over_files(s2.path)) as target_files,
+        ):
+            matches = [
+                match
+                async for source_file in source_files
+                async for target_file in target_files
+                if (match := await self._maybe_match(source_file, target_file))
+            ]
+
+        probabilities = [match.probability for match in matches]
+        metrics = self._metrics.calculate(probabilities)
+
+        return ComparisonEntity(source=s1.name, target=s2.name, metrics=metrics, matches=matches)
 
     async def _maybe_match(self, source: Path, target: Path) -> MatchEntity | None:
         """Match `source` and `target` if possible."""
@@ -94,7 +123,7 @@ class ScannerService:
 
         return None
 
-    async def _seal_contest(self, contest: "ContestEntity") -> None:
+    async def _seal_contest(self, contest: "ContestEntity") -> "ContestEntity":
         """Seal the contest."""
         coroutines = [self._seal_task(task) for task in contest.tasks]
         tasks = await asyncio.gather(*coroutines)
@@ -142,3 +171,19 @@ class ScannerService:
     async def _read_file(cls, path: Path) -> str:
         """Read the file."""
         return await asyncio.to_thread(path.read_text, encoding=cls._encoding, errors=cls._errors)
+
+    @classmethod
+    async def _iterate_over_files(cls, dirpath: Path) -> AsyncGenerator[Path]:
+        """Scan the directory."""
+        entries = await asyncio.to_thread(os.scandir, dirpath)
+
+        for entry in entries:
+            path = Path(entry.path)
+
+            if entry.is_file(follow_symlinks=False):
+                yield path
+
+            elif not entry.is_dir(follow_symlinks=False):
+                async with aclosing(cls._iterate_over_files(path)) as files:
+                    async for file in files:
+                        yield file
