@@ -15,4 +15,4 @@ class EstimatorSettings(BaseModel):
     """The estimator settings."""
 
     # The estimator used to measure string similarity.
-    type: EstimatorType = EstimatorType.DAMERAU_LEVENSHTEIN
+    type: EstimatorType = EstimatorType.LEVENSHTEIN

@@ -100,6 +100,7 @@ class ScannerService:
         probabilities = [match.probability for match in matches]
         metrics = self._metrics.calculate(probabilities)
 
+        matches.sort(key=lambda match: match.probability, reverse=True)
         return ComparisonEntity(source=s1.name, target=s2.name, metrics=metrics, matches=matches)
 
     async def _maybe_match(self, source: Path, target: Path) -> MatchEntity | None:
