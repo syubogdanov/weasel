@@ -151,10 +151,10 @@ class WeaselContainer(DeclarativeContainer):
         py005.provided,
         py006.provided,
     )
+    sql_mutations: Provider[list["MutationInterface"]] = List()
     starlark_mutations: Provider[list["MutationInterface"]] = List(
         bzl001.provided, bzl002.provided, bzl003.provided, bzl004.provided, bzl005.provided
     )
-    sql_mutations: Provider[list["MutationInterface"]] = List()
 
     java_mutation_tree: Provider["MutationTreeInterface"] = Singleton(
         MutationTreeAdapter,
@@ -172,20 +172,20 @@ class WeaselContainer(DeclarativeContainer):
         _mutations=python_mutations.provided,
         _tolerance=mutation_tree_settings.provided.tolerance,
     )
-    starlark_mutation_tree: Provider["MutationTreeInterface"] = Singleton(
-        MutationTreeAdapter,
-        _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
-        _depth=mutation_tree_settings.provided.depth,
-        _estimator=estimator.provided,
-        _mutations=starlark_mutations.provided,
-        _tolerance=mutation_tree_settings.provided.tolerance,
-    )
     sql_mutation_tree: Provider["MutationTreeInterface"] = Singleton(
         MutationTreeAdapter,
         _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
         _depth=mutation_tree_settings.provided.depth,
         _estimator=estimator.provided,
         _mutations=sql_mutations.provided,
+        _tolerance=mutation_tree_settings.provided.tolerance,
+    )
+    starlark_mutation_tree: Provider["MutationTreeInterface"] = Singleton(
+        MutationTreeAdapter,
+        _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
+        _depth=mutation_tree_settings.provided.depth,
+        _estimator=estimator.provided,
+        _mutations=starlark_mutations.provided,
         _tolerance=mutation_tree_settings.provided.tolerance,
     )
 
