@@ -199,7 +199,6 @@ class WeaselContainer(DeclarativeContainer):
     scanner: Provider["ScannerService"] = Singleton(
         ScannerService,
         _bitbucket=bitbucket_adapter.provided,
-        _concurrency=system_settings.provided.max_workers,
         _estimator=estimator.provided,
         _github=github_adapter.provided,
         _languages=languages.provided,

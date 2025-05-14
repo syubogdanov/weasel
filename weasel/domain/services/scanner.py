@@ -32,7 +32,6 @@ class ScannerService:
     """The scanner service."""
 
     _bitbucket: "GitInterface"
-    _concurrency: int
     _estimator: "EstimatorInterface"
     _github: "GitInterface"
     _languages: list["LanguageInterface"]
@@ -42,10 +41,6 @@ class ScannerService:
 
     _encoding: ClassVar[str] = "utf-8"
     _errors: ClassVar[str] = "replace"
-
-    def __post_init__(self) -> None:
-        """Initialize the object."""
-        self._semaphore = asyncio.Semaphore(self._concurrency)
 
     async def scan(self, contest: "ContestEntity") -> "ReportEntity":
         """Scan the contest and return a report."""
@@ -80,23 +75,21 @@ class ScannerService:
             detail = "The submissions seem to be broken..."
             raise ValueError(detail)
 
-        async with (
-            self._semaphore,
-            aclosing(self._iterate_over_files(s1.path)) as source_files,
-            aclosing(self._iterate_over_files(s2.path)) as target_files,
-        ):
-            matches = [
-                MatchEntity(
-                    source=match.source.relative_to(s1.path),
-                    target=match.target.relative_to(s2.path),
-                    language=match.language,
-                    probability=match.probability,
-                    labels=match.labels,
-                )
-                async for source_file in source_files
-                async for target_file in target_files
-                if (match := await self._maybe_match(source_file, target_file))
-            ]
+        matches: list[MatchEntity] = []
+
+        async with aclosing(self._iterate_over_files(s1.path)) as source_files:
+            async for source_file in source_files:
+                async with aclosing(self._iterate_over_files(s2.path)) as target_files:
+                    async for target_file in target_files:
+                        if match := await self._maybe_match(source_file, target_file):
+                            match = MatchEntity(
+                                source=match.source.relative_to(s1.path),
+                                target=match.target.relative_to(s2.path),
+                                language=match.language,
+                                probability=match.probability,
+                                labels=match.labels,
+                            )
+                            matches.append(match)
 
         probabilities = [match.probability for match in matches]
         metrics = self._metrics.calculate(probabilities)
@@ -198,7 +191,7 @@ class ScannerService:
             if entry.is_file(follow_symlinks=False):
                 yield path
 
-            elif not entry.is_dir(follow_symlinks=False):
+            elif entry.is_dir(follow_symlinks=False):
                 async with aclosing(cls._iterate_over_files(path)) as files:
                     async for file in files:
                         yield file
