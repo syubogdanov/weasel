@@ -183,7 +183,8 @@ class ScannerService:
     @classmethod
     async def _iterate_over_files(cls, dirpath: Path) -> AsyncGenerator[Path]:
         """Scan the directory."""
-        entries = await asyncio.to_thread(os.scandir, dirpath)
+        iterator = os.scandir(dirpath)
+        entries = await asyncio.to_thread(list, iterator)
 
         for entry in entries:
             path = Path(entry.path)
