@@ -58,6 +58,18 @@ class WeaselContainer(DeclarativeContainer):
 
     id_factory: Provider[UUID] = Factory(uuid4)
 
+    java_language: Provider["LanguageInterface"] = Singleton(JavaLanguage)
+    python_language: Provider["LanguageInterface"] = Singleton(PythonLanguage)
+    sql_language: Provider["LanguageInterface"] = Singleton(SQLLanguage)
+    starlark_language: Provider["LanguageInterface"] = Singleton(StarlarkLanguage)
+
+    languages: Provider[list["LanguageInterface"]] = List(
+        java_language.provided,
+        python_language.provided,
+        sql_language.provided,
+        starlark_language.provided,
+    )
+
     cache_cashews_adapter: Provider["CacheCashewsAdapter"] = Singleton(
         CacheCashewsAdapter, _settings=cache_settings.provided
     )
@@ -75,6 +87,7 @@ class WeaselContainer(DeclarativeContainer):
         SealerAdapter,
         _data_dir=service_settings.provided.data_directory,
         _id_factory=id_factory.provider,
+        _languages=languages.provided,
     )
 
     bitbucket_adapter: Provider["GitInterface"] = Singleton(
@@ -82,18 +95,6 @@ class WeaselContainer(DeclarativeContainer):
     )
     github_adapter: Provider["GitInterface"] = Singleton(
         GitHubAdapter, _cache=cache_adapter.provided
-    )
-
-    java_language: Provider["LanguageInterface"] = Singleton(JavaLanguage)
-    python_language: Provider["LanguageInterface"] = Singleton(PythonLanguage)
-    sql_language: Provider["LanguageInterface"] = Singleton(SQLLanguage)
-    starlark_language: Provider["LanguageInterface"] = Singleton(StarlarkLanguage)
-
-    languages: Provider[list["LanguageInterface"]] = List(
-        java_language.provided,
-        python_language.provided,
-        sql_language.provided,
-        starlark_language.provided,
     )
 
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(

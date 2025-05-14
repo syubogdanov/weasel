@@ -2,6 +2,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 from stat import S_ISDIR, S_ISLNK, S_ISREG
+from typing import TYPE_CHECKING
 from uuid import UUID
 
 from aioshutil import copy2, copytree, rmtree
@@ -10,12 +11,17 @@ from aiostdlib import os
 from weasel.domain.services.interfaces.sealer import SealerInterface
 
 
+if TYPE_CHECKING:
+    from weasel.domain.services.interfaces.language import LanguageInterface
+
+
 @dataclass
 class SealerAdapter(SealerInterface):
     """The sealer adapter."""
 
     _data_dir: Path
     _id_factory: Callable[[], UUID]
+    _languages: list["LanguageInterface"]
 
     def __post_init__(self) -> None:
         """Initialize the object."""
@@ -50,10 +56,21 @@ class SealerAdapter(SealerInterface):
             await copy2(path, seal / path.name, follow_symlinks=False)
 
         if S_ISDIR(st.st_mode):
-            await copytree(path, seal, symlinks=False, ignore_dangling_symlinks=True)
+            await copytree(
+                src=path,
+                dst=seal,
+                symlinks=False,
+                ignore=self._ignore,
+                ignore_dangling_symlinks=True,
+            )
 
         return seal
 
     async def clean(self) -> None:
         """Clean the sealing layer."""
         await rmtree(self._seal_dir, ignore_errors=True)  # type: ignore[call-arg]
+
+    def _ignore(self, _dirname: str, files: list[str]) -> bool:
+        """Ignore specific patterns when copying trees."""
+        suffixes = [suffix for language in self._languages for suffix in language.get_extensions()]
+        return [file for file in files if Path(file).suffix not in suffixes]
