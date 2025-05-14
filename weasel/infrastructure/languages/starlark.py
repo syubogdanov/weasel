@@ -22,7 +22,10 @@ class StarlarkLanguage(LanguageInterface):
         visitor = StarlarkVisitor()
         visitor.visit(tree)
 
-        return not visitor.is_triggered()
+        if visitor.is_triggered():
+            return False
+
+        return bool(tree.body)
 
     @classmethod
     def get_extensions(cls) -> set[str]:

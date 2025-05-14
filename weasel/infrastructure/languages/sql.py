@@ -15,10 +15,12 @@ class SQLLanguage(LanguageInterface):
     async def recognizes(cls, code: str) -> bool:
         """Check if code matches the language."""
         try:
-            parse(code)
+            trees = parse(code)
+
         except ParseError:
             return False
-        return True
+
+        return trees != [None]
 
     @classmethod
     def get_extensions(cls) -> set[str]:

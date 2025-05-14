@@ -14,10 +14,12 @@ class PythonLanguage(LanguageInterface):
     async def recognizes(cls, code: str) -> bool:
         """Check if code matches the language."""
         try:
-            ast.parse(code)
+            tree = ast.parse(code)
+
         except SyntaxError:
             return False
-        return True
+
+        return bool(tree.body)
 
     @classmethod
     def get_extensions(cls) -> set[str]:
