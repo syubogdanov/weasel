@@ -19,11 +19,12 @@ class PythonMutation(MutationInterface):
 
     Features
     --------
-    * Eliminates syntatic permutations.
+    * Eliminates syntatic reordering.
 
     Notes
     -----
-    * Null-augmented block comparison is used.
+    * Block comparison algorithm is used;
+    * The Bubble-Down strategy is used.
     """
 
     _estimator: "EstimatorInterface"
