@@ -23,7 +23,7 @@ def _validate(ref: str) -> str:
         detail = "The reference (branch / tag) must not end with '.lock'"
         raise ValueError(detail)
 
-    if re.search(r"[\000-\037\177\s~^:?*\[\\]", ref):
+    if not re.fullmatch(r"[A-Za-z0-9._\-/]+", ref):
         detail = "The reference (branch / tag) contains unsupported characters"
         raise ValueError(detail)
 
