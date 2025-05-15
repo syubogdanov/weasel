@@ -85,17 +85,22 @@ class PythonReorderer:
         blocks: list[ast.AST | list[ast.AST]] = [[]] * len(source_blocks)
 
         min_index = min(matchings)
-        max_index = max(matchings)
-
         for index in range(min_index):
             blocks[index] = source_blocks[index]
 
+        max_index = max(matchings)
         for index in range(max_index + 1, len(source_blocks)):
             blocks[index] = source_blocks[index]
 
+        bubble_count = 0
+        for index in range(min_index, max_index + 1):
+            if index not in matchings:
+                blocks[min_index + bubble_count] = source_blocks[index]
+                bubble_count += 1
+
         reordering = sorted(matchings, key=lambda old_index: matchings[old_index])
 
-        for new_index, old_index in enumerate(reordering, start=min_index):
+        for new_index, old_index in enumerate(reordering, start=min_index + bubble_count):
             target_index = matchings[old_index]
 
             source_block = source_blocks[old_index]
