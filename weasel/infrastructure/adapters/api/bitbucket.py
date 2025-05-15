@@ -60,15 +60,15 @@ class BitbucketAPIAdapter:
                     await file.write(chunk)
 
         except ServerConnectionError as exception:
-            detail = f"Connection failed while downloading '{user}/{repo}' (Bitbucket, {ref=})"
+            detail = f"Connection failed while downloading '{user}/{repo}@{ref}' (Bitbucket)"
             raise WeaselConnectionError(detail) from exception
 
         except ClientResponseError as exception:
-            detail = f"'{user}/{repo}' is private or does not exist (Bitbucket, {ref=})"
+            detail = f"'{user}/{repo}@{ref}' is private or does not exist (Bitbucket)"
             raise FileNotFoundError(detail) from exception
 
         except Exception as exception:
-            detail = f"An error occurred while downloading '{user}/{repo}' (Bitbucket, {ref=})"
+            detail = f"An error occurred while downloading '{user}/{repo}@{ref}' (Bitbucket)"
             raise WeaselError(detail) from exception
 
         await aioshutil.unpack_archive(archive_path, extract_path, format="zip")
