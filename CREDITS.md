@@ -23,7 +23,6 @@
 | [cashews][073]                    | [@Krukov][074]                        | [GitHub][075]               | [MIT][076]                        |
 | [tenacity][077]                   | [@jd][078]                            | [GitHub][079]               | [Apache-2.0][080]                 |
 | [platformdirs][081]               | [@tox-dev][082]                       | [GitHub][083]               | [MIT][084]                        |
-| [blake3-py][085]                  | [@oconnor663][086]                    | [GitHub][087]               | [CC0-1.0][088]                    |
 | [aioshutil][089]                  | [@kumaraditya303][090]                | [GitHub][091]               | [BSD-3-Clause][092]               |
 | [aiostdlib][093]                  | [@syubogdanov][094]                   | [GitHub][095]               | [MIT][096]                        |
 | [pyyaml][097]                     | [@yaml][098]                          | [GitHub][099]               | [MIT][100]                        |
@@ -134,11 +133,6 @@
 [082]: https://github.com/tox-dev
 [083]: https://github.com/
 [084]: https://github.com/tox-dev/platformdirs/blob/main/LICENSE
-
-[085]: https://github.com/oconnor663/blake3-py
-[086]: https://github.com/oconnor663
-[087]: https://github.com/
-[088]: https://github.com/oconnor663/blake3-py/blob/master/LICENSE
 
 [089]: https://github.com/kumaraditya303/aioshutil
 [090]: https://github.com/kumaraditya303
