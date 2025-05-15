@@ -103,10 +103,10 @@ class WeaselContainer(DeclarativeContainer):
     )
 
     bitbucket_adapter: Provider["GitInterface"] = Singleton(
-        BitbucketAdapter, _cache=cache_adapter.provided
+        BitbucketAdapter, _bitbucket=bitbucket_api_adapter.provided, _cache=cache_adapter.provided
     )
     github_adapter: Provider["GitInterface"] = Singleton(
-        GitHubAdapter, _cache=cache_adapter.provided
+        GitHubAdapter, _cache=cache_adapter.provided, _github=github_api_adapter.provided
     )
 
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
