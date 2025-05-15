@@ -16,7 +16,7 @@ class SQLMutation(MutationInterface):
     Features
     --------
     * Each expression starts from a new line;
-    * Ensures all identifiers that need to be quoted are quoted..
+    * Ensures all identifiers that need to be quoted are quoted.
     """
 
     @classmethod

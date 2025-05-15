@@ -38,6 +38,7 @@ from weasel.infrastructure.mutations.sql import (
     sql011,
     sql012,
     sql013,
+    sql014,
 )
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
 from weasel.settings.cache import CacheSettings
@@ -173,6 +174,9 @@ class WeaselContainer(DeclarativeContainer):
     sql011: Provider["MutationInterface"] = Singleton(sql011.SQLMutation)
     sql012: Provider["MutationInterface"] = Singleton(sql012.SQLMutation)
     sql013: Provider["MutationInterface"] = Singleton(sql013.SQLMutation)
+    sql014: Provider["MutationInterface"] = Singleton(
+        sql014.SQLMutation, _estimator=estimator.provided
+    )
 
     java_mutations: Provider[list["MutationInterface"]] = List(java001.provided)
     python_mutations: Provider[list["MutationInterface"]] = List(
@@ -197,6 +201,7 @@ class WeaselContainer(DeclarativeContainer):
         sql011.provided,
         sql012.provided,
         sql013.provided,
+        sql014.provided,
     )
     starlark_mutations: Provider[list["MutationInterface"]] = List(
         bzl001.provided, bzl002.provided, bzl003.provided, bzl004.provided, bzl005.provided
