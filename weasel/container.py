@@ -196,7 +196,7 @@ class WeaselContainer(DeclarativeContainer):
         sql=sql_mutation_tree.provided,
     )
 
-    scanner: Provider["ScannerService"] = Singleton(
+    scanner_service: Provider["ScannerService"] = Singleton(
         ScannerService,
         _bitbucket=bitbucket_adapter.provided,
         _estimator=estimator.provided,
