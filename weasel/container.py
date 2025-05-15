@@ -6,9 +6,9 @@ from dependency_injector.providers import Dict, Factory, List, Provider, Selecto
 
 from weasel.domain.services.scanner import ScannerService
 from weasel.domain.types.language import LanguageType
+from weasel.infrastructure.adapters.api.github import GitHubAPIAdapter
 from weasel.infrastructure.adapters.cache import CacheAdapter
 from weasel.infrastructure.adapters.cashews.cache import CacheCashewsAdapter
-from weasel.infrastructure.adapters.hash import HashAdapter
 from weasel.infrastructure.adapters.metrics import MetricsAdapter
 from weasel.infrastructure.adapters.mutation_tree import MutationTreeAdapter
 from weasel.infrastructure.adapters.sealer import SealerAdapter
@@ -26,16 +26,15 @@ from weasel.infrastructure.mutations.python import py001, py002, py003, py004, p
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
 from weasel.settings.cache import CacheSettings
 from weasel.settings.estimator import EstimatorSettings
+from weasel.settings.external_api import ExternalAPISettings
 from weasel.settings.mutation_tree import MutationTreeSettings
 from weasel.settings.retries import RetriesSettings
 from weasel.settings.service import ServiceSettings
-from weasel.settings.system import SystemSettings
 
 
 if TYPE_CHECKING:
     from weasel.domain.services.interfaces.estimator import EstimatorInterface
     from weasel.domain.services.interfaces.git import GitInterface
-    from weasel.domain.services.interfaces.hash import HashInterface
     from weasel.domain.services.interfaces.language import LanguageInterface
     from weasel.domain.services.interfaces.metrics import MetricsInterface
     from weasel.domain.services.interfaces.mutation import MutationInterface
@@ -52,9 +51,9 @@ class WeaselContainer(DeclarativeContainer):
         CacheSettings, directory=service_settings.provided.cache_directory
     )
     estimator_settings: Provider["EstimatorSettings"] = Singleton(EstimatorSettings)
+    external_api_settings: Provider["ExternalAPISettings"] = Singleton(ExternalAPISettings)
     mutation_tree_settings: Provider["MutationTreeSettings"] = Singleton(MutationTreeSettings)
     retries_settings: Provider["RetriesSettings"] = Singleton(RetriesSettings)
-    system_settings: Provider["SystemSettings"] = Singleton(SystemSettings)
 
     id_factory: Provider[UUID] = Factory(uuid4)
 
@@ -77,9 +76,6 @@ class WeaselContainer(DeclarativeContainer):
     cache_adapter: Provider["CacheAdapter"] = Singleton(
         CacheAdapter, _cashews=cache_cashews_adapter.provided
     )
-    hash_adapter: Provider["HashInterface"] = Singleton(
-        HashAdapter, _max_threads=system_settings.provided.max_workers
-    )
     metrics_adapter: Provider["MetricsInterface"] = Singleton(
         MetricsAdapter, _precision=service_settings.provided.precision
     )
@@ -90,6 +86,14 @@ class WeaselContainer(DeclarativeContainer):
         _languages=languages.provided,
     )
 
+    github_api_adapter: Provider["GitHubAPIAdapter"] = Singleton(
+        GitHubAPIAdapter,
+        _api_url=external_api_settings.provided.github_api_url,
+        _connect_timeout=external_api_settings.provided.github_connect_timeout,
+        _data_dir=service_settings.provided.data_directory,
+        _id_factory=id_factory.provider,
+    )
+
     bitbucket_adapter: Provider["GitInterface"] = Singleton(
         BitbucketAdapter, _cache=cache_adapter.provided
     )
@@ -98,22 +102,13 @@ class WeaselContainer(DeclarativeContainer):
     )
 
     damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
-        DamerauLevenshteinEstimator,
-        _cache=cache_adapter.provided,
-        _hash=hash_adapter.provided,
-        _precision=service_settings.provided.precision,
+        DamerauLevenshteinEstimator, _precision=service_settings.provided.precision
     )
     jaro_winkler_estimator: Provider["EstimatorInterface"] = Singleton(
-        JaroWinklerEstimator,
-        _cache=cache_adapter.provided,
-        _hash=hash_adapter.provided,
-        _precision=service_settings.provided.precision,
+        JaroWinklerEstimator, _precision=service_settings.provided.precision
     )
     levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
-        LevenshteinEstimator,
-        _cache=cache_adapter.provided,
-        _hash=hash_adapter.provided,
-        _precision=service_settings.provided.precision,
+        LevenshteinEstimator, _precision=service_settings.provided.precision
     )
 
     estimator: Provider["EstimatorInterface"] = Selector(

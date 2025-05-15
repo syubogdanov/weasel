@@ -39,15 +39,15 @@ class SealerAdapter(SealerInterface):
 
         if S_ISLNK(st.st_mode):
             detail = f"'{path}' is a symbolic link"
-            raise OSError(detail)
+            raise ValueError(detail)
 
         if not S_ISREG(st.st_mode) and not S_ISDIR(st.st_mode):
             detail = f"'{path}' is not a regular file or directory"
-            raise OSError(detail)
+            raise ValueError(detail)
 
         if S_ISDIR(st.st_mode) and not await os.listdir(path):
             detail = f"'{path}' is an empty directory"
-            raise OSError(detail)
+            raise ValueError(detail)
 
         identifier = self._id_factory()
         seal = self._seal_dir / identifier.hex

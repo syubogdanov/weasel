@@ -23,11 +23,13 @@
 | [cashews][073]                    | [@Krukov][074]                        | [GitHub][075]               | [MIT][076]                        |
 | [tenacity][077]                   | [@jd][078]                            | [GitHub][079]               | [Apache-2.0][080]                 |
 | [platformdirs][081]               | [@tox-dev][082]                       | [GitHub][083]               | [MIT][084]                        |
+| [aiohttp][085]                    | [@aio-libs][086]                      | [GitHub][087]               | [Apache-2.0][088]                 |
 | [aioshutil][089]                  | [@kumaraditya303][090]                | [GitHub][091]               | [BSD-3-Clause][092]               |
 | [aiostdlib][093]                  | [@syubogdanov][094]                   | [GitHub][095]               | [MIT][096]                        |
 | [pyyaml][097]                     | [@yaml][098]                          | [GitHub][099]               | [MIT][100]                        |
 | [toml][101]                       | [@uiri][102]                          | [GitHub][103]               | [MIT][104]                        |
 | [typeshed][105]                   | [@python][106]                        | [GitHub][107]               | [Apache-2.0][108]                 |
+| [aiofiles][109]                   | [@Tinche][110]                        | [GitHub][111]               | [Apache-2.0][112]                 |
 
 [001]: https://www.flaticon.com/free-icon/weasel_334982
 [002]: https://www.flaticon.com/authors/freepik
@@ -134,6 +136,11 @@
 [083]: https://github.com/
 [084]: https://github.com/tox-dev/platformdirs/blob/main/LICENSE
 
+[085]: https://github.com/aio-libs/aiohttp
+[086]: https://github.com/aio-libs
+[087]: https://github.com/
+[088]: https://github.com/aio-libs/aiohttp/blob/master/LICENSE.txt
+
 [089]: https://github.com/kumaraditya303/aioshutil
 [090]: https://github.com/kumaraditya303
 [091]: https://github.com/
@@ -158,3 +165,8 @@
 [106]: https://github.com/python
 [107]: https://github.com/
 [108]: https://github.com/python/typeshed/blob/main/LICENSE
+
+[109]: https://github.com/Tinche/aiofiles
+[110]: https://github.com/Tinche
+[111]: https://github.com/
+[112]: https://github.com/Tinche/aiofiles/blob/main/LICENSE

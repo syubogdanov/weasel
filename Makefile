@@ -1,5 +1,8 @@
 VENV = poetry run
 
+APP = weasel
+TESTS = tests
+
 
 # CI/CD
 cicd: format lint test
@@ -9,21 +12,21 @@ cicd: format lint test
 format: black
 
 black:
-	$(VENV) black ./
+	$(VENV) black $(APP) $(TESTS)
 
 
 # Linters
 lint: ruff mypy
 
 mypy:
-	$(VENV) mypy ./
+	$(VENV) mypy $(APP) $(TESTS)
 
 ruff:
-	$(VENV) ruff check ./
+	$(VENV) ruff check $(APP) $(TESTS)
 
 
 # Tests
 test: unit-tests
 
 unit-tests:
-	$(VENV) pytest ./tests/
+	$(VENV) pytest $(TESTS)
