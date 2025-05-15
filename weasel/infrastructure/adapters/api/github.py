@@ -60,15 +60,15 @@ class GitHubAPIAdapter:
                     await file.write(chunk)
 
         except ServerConnectionError as exception:
-            detail = f"Connection failed while downloading '{user}/{repo}@{ref}' (GitHub)"
+            detail = f"GitHub: connection failed while downloading '{user}/{repo}@{ref}'"
             raise WeaselConnectionError(detail) from exception
 
         except ClientResponseError as exception:
-            detail = f"'{user}/{repo}@{ref}' is private or does not exist (GitHub)"
+            detail = f"GitHub: '{user}/{repo}@{ref}' is private or does not exist"
             raise FileNotFoundError(detail) from exception
 
         except Exception as exception:
-            detail = f"An error occurred while downloading '{user}/{repo}@{ref}' (GitHub)"
+            detail = f"GitHub: an error occurred while downloading '{user}/{repo}@{ref}'"
             raise WeaselError(detail) from exception
 
         await aioshutil.unpack_archive(archive_path, extract_path, format="zip")
