@@ -24,6 +24,21 @@ from weasel.infrastructure.languages.sql import SQLLanguage
 from weasel.infrastructure.languages.starlark import StarlarkLanguage
 from weasel.infrastructure.mutations.java import java001
 from weasel.infrastructure.mutations.python import py001, py002, py003, py004, py005, py006
+from weasel.infrastructure.mutations.sql import (
+    sql001,
+    sql002,
+    sql003,
+    sql004,
+    sql005,
+    sql006,
+    sql007,
+    sql008,
+    sql009,
+    sql010,
+    sql011,
+    sql012,
+    sql013,
+)
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
 from weasel.settings.cache import CacheSettings
 from weasel.settings.estimator import EstimatorSettings
@@ -145,6 +160,20 @@ class WeaselContainer(DeclarativeContainer):
         py006.PythonMutation, _estimator=estimator.provided
     )
 
+    sql001: Provider["MutationInterface"] = Singleton(sql001.SQLMutation)
+    sql002: Provider["MutationInterface"] = Singleton(sql002.SQLMutation)
+    sql003: Provider["MutationInterface"] = Singleton(sql003.SQLMutation)
+    sql004: Provider["MutationInterface"] = Singleton(sql004.SQLMutation)
+    sql005: Provider["MutationInterface"] = Singleton(sql005.SQLMutation)
+    sql006: Provider["MutationInterface"] = Singleton(sql006.SQLMutation)
+    sql007: Provider["MutationInterface"] = Singleton(sql007.SQLMutation)
+    sql008: Provider["MutationInterface"] = Singleton(sql008.SQLMutation)
+    sql009: Provider["MutationInterface"] = Singleton(sql009.SQLMutation)
+    sql010: Provider["MutationInterface"] = Singleton(sql010.SQLMutation)
+    sql011: Provider["MutationInterface"] = Singleton(sql011.SQLMutation)
+    sql012: Provider["MutationInterface"] = Singleton(sql012.SQLMutation)
+    sql013: Provider["MutationInterface"] = Singleton(sql013.SQLMutation)
+
     java_mutations: Provider[list["MutationInterface"]] = List(java001.provided)
     python_mutations: Provider[list["MutationInterface"]] = List(
         py001.provided,
@@ -154,7 +183,21 @@ class WeaselContainer(DeclarativeContainer):
         py005.provided,
         py006.provided,
     )
-    sql_mutations: Provider[list["MutationInterface"]] = List()
+    sql_mutations: Provider[list["MutationInterface"]] = List(
+        sql001.provided,
+        sql002.provided,
+        sql003.provided,
+        sql004.provided,
+        sql005.provided,
+        sql006.provided,
+        sql007.provided,
+        sql008.provided,
+        sql009.provided,
+        sql010.provided,
+        sql011.provided,
+        sql012.provided,
+        sql013.provided,
+    )
     starlark_mutations: Provider[list["MutationInterface"]] = List(
         bzl001.provided, bzl002.provided, bzl003.provided, bzl004.provided, bzl005.provided
     )
