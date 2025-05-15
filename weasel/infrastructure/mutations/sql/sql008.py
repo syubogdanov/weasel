@@ -1,3 +1,5 @@
+import asyncio
+
 from dataclasses import dataclass
 
 from sqlglot import parse
@@ -19,7 +21,17 @@ class SQLMutation(MutationInterface):
 
     @classmethod
     async def mutate(cls, source: str, _target: str) -> str:
-        """Mutate `source` using `target` as the reference."""
+        """Mutate `source` using `target` as the reference.
+
+        Notes
+        -----
+        * `sqlglot` is written in *Rust*.
+        """
+        return await asyncio.to_thread(cls._mutate, source)
+
+    @classmethod
+    def _mutate(cls, source: str) -> str:
+        """Mutate `source`."""
         expressions = [expression for expression in parse(source) if expression]
         as_strings = [
             optimize(expression, rules=[eliminate_subqueries]).sql() for expression in expressions
