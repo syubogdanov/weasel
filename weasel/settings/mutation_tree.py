@@ -11,4 +11,4 @@ class MutationTreeSettings(BaseModel):
     # The maximum tree depth.
     depth: NonNegativeInt = 3
     # The tolerance.
-    tolerance: Annotated[float, Field(ge=0.0, le=1.0)] = 0.10
+    tolerance: Annotated[float, Field(ge=0.0, le=1.0)] = 0.075
