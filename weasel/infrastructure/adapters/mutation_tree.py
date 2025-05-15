@@ -25,7 +25,8 @@ class MutationTreeAdapter(MutationTreeInterface):
     async def get_mutations(self, source: str, target: str) -> list["MutationInterface"]:
         """Get the set of mutations required to convert `source` to `target`."""
         score = await self._estimator.estimate(source, target)
-        optimum = await self._dfs(source, target, DFSOptions(mutations=[], score=score))
+        options = DFSOptions(mutations=[], score=score)
+        optimum = await self._dfs(source, target, options)
         return optimum.mutations
 
     async def _dfs(self, source: str, target: str, options: "DFSOptions") -> "DFSOptions":
