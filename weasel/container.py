@@ -6,6 +6,7 @@ from dependency_injector.providers import Dict, Factory, List, Provider, Selecto
 
 from weasel.domain.services.scanner import ScannerService
 from weasel.domain.types.language import LanguageType
+from weasel.infrastructure.adapters.api.bitbucket import BitbucketAPIAdapter
 from weasel.infrastructure.adapters.api.github import GitHubAPIAdapter
 from weasel.infrastructure.adapters.cache import CacheAdapter
 from weasel.infrastructure.adapters.cashews.cache import CacheCashewsAdapter
@@ -86,6 +87,13 @@ class WeaselContainer(DeclarativeContainer):
         _languages=languages.provided,
     )
 
+    bitbucket_api_adapter: Provider["BitbucketAPIAdapter"] = Singleton(
+        BitbucketAPIAdapter,
+        _api_url=external_api_settings.provided.bitbucket_api_url,
+        _connect_timeout=external_api_settings.provided.bitbucket_connect_timeout,
+        _data_dir=service_settings.provided.data_directory,
+        _id_factory=id_factory.provider,
+    )
     github_api_adapter: Provider["GitHubAPIAdapter"] = Singleton(
         GitHubAPIAdapter,
         _api_url=external_api_settings.provided.github_api_url,

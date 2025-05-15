@@ -19,8 +19,8 @@ from weasel.infrastructure.adapters.api.retries import retry_api
 
 
 @dataclass
-class GitHubAPIAdapter:
-    """The *GitHub* API adapter."""
+class BitbucketAPIAdapter:
+    """The *Bitbucket* API adapter."""
 
     _api_url: str
     _connect_timeout: float
@@ -31,14 +31,14 @@ class GitHubAPIAdapter:
 
     def __post_init__(self) -> None:
         """Initialize the object."""
-        self._github_dir = self._data_dir / "github"
-        self._archive_dir = self._github_dir / "archive"
-        self._extract_dir = self._github_dir / "extract"
+        self._bitbucket_dir = self._data_dir / "bitbucket"
+        self._archive_dir = self._bitbucket_dir / "archive"
+        self._extract_dir = self._bitbucket_dir / "extract"
 
     @retry_api
     async def download(self, user: str, repo: str, ref: str) -> Path:
         """Clone the repository."""
-        path = f"/repos/{user}/{repo}/zipball/{ref}"
+        path = f"/{user}/{repo}/get/{ref}.zip"
         url = urljoin(self._api_url, path)
 
         identifier = self._id_factory()
@@ -52,7 +52,7 @@ class GitHubAPIAdapter:
 
         try:
             async with (
-                ClientSession(headers=self._headers, conn_timeout=self._connect_timeout) as session,
+                ClientSession(conn_timeout=self._connect_timeout) as session,
                 session.get(url, allow_redirects=True, raise_for_status=True) as response,
                 aiofiles.open(archive_path, mode="wb") as file,
             ):
@@ -60,26 +60,21 @@ class GitHubAPIAdapter:
                     await file.write(chunk)
 
         except ServerConnectionError as exception:
-            detail = f"Connection failed while downloading '{user}/{repo}' (GitHub, {ref=})"
+            detail = f"Connection failed while downloading '{user}/{repo}' (Bitbucket, {ref=})"
             raise WeaselConnectionError(detail) from exception
 
         except ClientResponseError as exception:
-            detail = f"'{user}/{repo}' is private or does not exist (GitHub, {ref=})"
+            detail = f"'{user}/{repo}' is private or does not exist (Bitbucket, {ref=})"
             raise FileNotFoundError(detail) from exception
 
         except Exception as exception:
-            detail = f"An error occurred while downloading '{user}/{repo}' (GitHub, {ref=})"
+            detail = f"An error occurred while downloading '{user}/{repo}' (Bitbucket, {ref=})"
             raise WeaselError(detail) from exception
 
         await aioshutil.unpack_archive(archive_path, extract_path, format="zip")
 
         paths, _ = await asyncio.gather(os.listdir(extract_path), self._safe_unlink(archive_path))
         return extract_path / paths[0]
-
-    @property
-    def _headers(self) -> dict[str, str]:
-        """Get the headers for the request."""
-        return {"Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
 
     @classmethod
     async def _safe_unlink(cls, path: Path) -> None:
