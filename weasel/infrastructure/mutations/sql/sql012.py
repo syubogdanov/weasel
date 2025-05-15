@@ -32,9 +32,10 @@ class SQLMutation(MutationInterface):
     @classmethod
     def _mutate(cls, source: str) -> str:
         """Mutate `source`."""
-        expressions = [expression for expression in parse(source) if expression]
-        as_strings = [optimize(expression, rules=[simplify]).sql() for expression in expressions]
-        return ";\n".join(as_strings) + ";"
+        expressions = [
+            optimize(expression, rules=[simplify]) for expression in parse(source) if expression
+        ]
+        return ";\n".join(expression.sql() for expression in expressions) + ";"
 
     @classmethod
     def as_label(cls) -> str:
