@@ -1,7 +1,6 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 from functools import cached_property
-from os import PathLike
 from pathlib import Path
 from stat import S_ISDIR, S_ISLNK, S_ISREG
 from typing import TYPE_CHECKING
@@ -76,19 +75,24 @@ class SealerAdapter(SealerInterface):
         """Ignore specific patterns when copying trees."""
         if self._is_ignorable(root):
             return set()
-        return [name for name in names if self._is_ignorable(name)]
+        return {name for name in names if self._is_ignorable(name)}
 
-    def _is_ignorable(self, pathlike: PathLike[str]) -> bool:
+    def _is_ignorable(self, pathlike: str) -> bool:
         """Ignore specific patterns when copying trees."""
         path = Path(pathlike)
 
+        # Considered as something private
         if path.name.startswith("."):
             return True
 
         if path.name in {"__pycache__"}:
             return True
 
-        return path.suffix and (path.suffix not in self._supported_extensions)
+        # Considered as directories
+        if not path.suffix:
+            return False
+
+        return path.suffix not in self._supported_extensions
 
     @cached_property
     def _supported_extensions(self) -> set[str]:
