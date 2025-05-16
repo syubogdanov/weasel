@@ -1,45 +1,38 @@
 import pytest
 
 from weasel.domain.services.interfaces.mutation import MutationInterface
-from weasel.infrastructure.mutations.java.java001 import JavaMutation
+from weasel.infrastructure.mutations.python.py001 import PythonMutation
 
 
 NO_TARGET = ""
 
 BEFORE = """
-/*
-* This is a comment
-*/
+def pep8() -> None:
+    print(1+2+3+4+5)
 
-public class Test {
-    // This is a public static void main
-    static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
+# There are some comments
+# 1. This is a comment
+# 2. This is another comment
 """
 
 AFTER = """
-public class Test {
-    static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
+def pep8() -> None:
+    print(1 + 2 + 3 + 4 + 5)
 """
 
 
 @pytest.fixture
 def mutation() -> MutationInterface:
     """Fixture the mutation."""
-    return JavaMutation()
+    return PythonMutation()
 
 
-class TestJavaMutation:
+class TestPythonMutation:
     """Test the mutation."""
 
     async def test__as_label(self, mutation: MutationInterface) -> None:
         """Test the `as_label` method."""
-        assert mutation.as_label() == "JAVA001"
+        assert mutation.as_label() == "PY001"
 
     async def test__mutate(self, mutation: MutationInterface) -> None:
         """Test the `mutate` method."""
