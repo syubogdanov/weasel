@@ -1,6 +1,8 @@
 import string
 
-from pydantic import BaseModel, ConfigDict, field_validator
+from typing import Self
+
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator
 
 from weasel.domain.dtypes.gitref import GitRef
 from weasel.domain.dtypes.sha1 import SHA1
@@ -73,3 +75,24 @@ class GitHubEntity(BaseModel):
             raise ValueError(detail)
 
         return repo
+
+    @model_validator(mode="after")
+    def ensure__no_more_than_one_ref(self) -> Self:
+        """Ensure that only one of branch, commit or tag is provided."""
+        if self.branch and self.commit and self.tag:
+            detail = "All three branch, commit and tag provided"
+            raise ValueError(detail)
+
+        if self.branch and self.commit:
+            detail = "Both branch and commit provided"
+            raise ValueError(detail)
+
+        if self.branch and self.tag:
+            detail = "Both branch and tag provided"
+            raise ValueError(detail)
+
+        if self.commit and self.tag:
+            detail = "Both commit and tag provided"
+            raise ValueError(detail)
+
+        return self
