@@ -6,7 +6,7 @@ from contextlib import aclosing
 from dataclasses import dataclass
 from itertools import combinations
 from pathlib import Path
-from typing import TYPE_CHECKING, ClassVar
+from typing import TYPE_CHECKING
 
 from weasel.domain.entities.comparison import ComparisonEntity
 from weasel.domain.entities.contest import ContestEntity
@@ -18,13 +18,10 @@ from weasel.domain.entities.task import TaskEntity
 
 
 if TYPE_CHECKING:
-    from weasel.domain.services.interfaces.estimator import EstimatorInterface
     from weasel.domain.services.interfaces.git import GitInterface
-    from weasel.domain.services.interfaces.language import LanguageInterface
     from weasel.domain.services.interfaces.metrics import MetricsInterface
-    from weasel.domain.services.interfaces.mutation_tree import MutationTreeInterface
     from weasel.domain.services.interfaces.sealer import SealerInterface
-    from weasel.domain.types.language import LanguageType
+    from weasel.domain.services.matcher import MatcherService
 
 
 @dataclass
@@ -32,15 +29,10 @@ class ScannerService:
     """The scanner service."""
 
     _bitbucket: "GitInterface"
-    _estimator: "EstimatorInterface"
     _github: "GitInterface"
-    _languages: list["LanguageInterface"]
+    _matcher: "MatcherService"
     _metrics: "MetricsInterface"
-    _mutation_trees: dict["LanguageType", "MutationTreeInterface"]
     _sealer: "SealerInterface"
-
-    _encoding: ClassVar[str] = "utf-8"
-    _errors: ClassVar[str] = "replace"
 
     async def scan(self, contest: "ContestEntity") -> "ReportEntity":
         """Scan the contest and return a report."""
@@ -80,7 +72,7 @@ class ScannerService:
         )
 
         coroutines = [
-            self._maybe_match(source_file, target_file)
+            self._matcher.maybe_match(source_file, target_file)
             for source_file in source_files
             for target_file in target_files
         ]
@@ -102,41 +94,6 @@ class ScannerService:
 
         matches.sort(key=lambda match: match.probability, reverse=True)
         return ComparisonEntity(source=s1.name, target=s2.name, metrics=metrics, matches=matches)
-
-    async def _maybe_match(self, source: Path, target: Path) -> MatchEntity | None:
-        """Match `source` and `target` if possible."""
-        for language in self._languages:
-            extensions = language.get_extensions()
-
-            if not extensions.issuperset({source.suffix, target.suffix}):
-                continue
-
-            source_text = await self._read_file(source)
-            if not await language.recognizes(source_text):
-                return None
-
-            target_text = await self._read_file(target)
-            if not await language.recognizes(target_text):
-                return None
-
-            mutation_tree = self._mutation_trees[language.as_type()]
-            mutations = await mutation_tree.get_mutations(source_text, target_text)
-
-            for mutation in mutations:
-                source_text = await mutation.mutate(source_text, target_text)
-
-            probability = await self._estimator.estimate(source_text, target_text)
-            labels = [mutation.as_label() for mutation in mutations]
-
-            return MatchEntity(
-                source=source,
-                target=target,
-                language=language.as_type(),
-                probability=probability,
-                labels=labels,
-            )
-
-        return None
 
     async def _seal_contest(self, contest: "ContestEntity") -> "ContestEntity":
         """Seal the contest."""
@@ -181,11 +138,6 @@ class ScannerService:
             raise ValueError(detail)
 
         return submission.path
-
-    @classmethod
-    async def _read_file(cls, path: Path) -> str:
-        """Read the file."""
-        return await asyncio.to_thread(path.read_text, encoding=cls._encoding, errors=cls._errors)
 
     @classmethod
     async def _list_files(cls, dirpath: Path) -> list[Path]:

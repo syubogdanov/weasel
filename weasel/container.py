@@ -4,6 +4,7 @@ from uuid import UUID, uuid4
 from dependency_injector.containers import DeclarativeContainer
 from dependency_injector.providers import Dict, Factory, List, Provider, Selector, Singleton
 
+from weasel.domain.services.matcher import MatcherService
 from weasel.domain.services.scanner import ScannerService
 from weasel.domain.types.language import LanguageType
 from weasel.infrastructure.adapters.api.bitbucket import BitbucketAPIAdapter
@@ -247,14 +248,18 @@ class WeaselContainer(DeclarativeContainer):
         sql=sql_mutation_tree.provided,
     )
 
+    matcher_service: Provider["MatcherService"] = Singleton(
+        MatcherService,
+        _estimator=estimator.provided,
+        _languages=languages.provided,
+        _mutation_trees=mutation_trees.provided,
+    )
     scanner_service: Provider["ScannerService"] = Singleton(
         ScannerService,
         _bitbucket=bitbucket_adapter.provided,
-        _estimator=estimator.provided,
         _github=github_adapter.provided,
-        _languages=languages.provided,
+        _matcher=matcher_service.provided,
         _metrics=metrics_adapter.provided,
-        _mutation_trees=mutation_trees.provided,
         _sealer=sealer_adapter.provided,
     )
 
