@@ -15,6 +15,8 @@
 
 ### Installation
 
+#### Git
+
 ```bash
 git clone https://github.com/syubogdanov/weasel.git
 cd weasel/
@@ -23,9 +25,15 @@ poetry install
 
 > Make sure you have *Python*, *Poetry* and *Git* installed.
 
-### Docker
+#### Docker
 
-...
+```bash
+git clone https://github.com/syubogdanov/weasel.git
+cd weasel/
+docker build --tag weasel .
+```
+
+> Make sure you have *Docker* installed.
 
 ### Usage
 
