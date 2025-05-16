@@ -1,11 +1,20 @@
 import asyncio
+import os
 
+from difflib import HtmlDiff
 from os import PathLike
 from pathlib import Path
+from tempfile import mkstemp
+from typing import Final
 
 import click
 
 from weasel.container import WEASEL_CONTAINER
+from weasel.domain.services.interfaces.mutation import MutationInterface
+
+
+ENCODING: Final[str] = "utf-8"
+ERRORS: Final[str] = "replace"
 
 
 @click.command()
@@ -36,8 +45,15 @@ def diff(source: str | PathLike[str], target: str | PathLike[str]) -> None:
         detail = f"'{source}' and '{target}' seem to be different languages..."
         raise click.UsageError(detail)
 
+    source_text = source.read_text(encoding=ENCODING, errors=ERRORS)
+    target_text = target.read_text(encoding=ENCODING, errors=ERRORS)
+    mutated_text = mutate_from_labels(source_text, target_text, maybe_match.labels)
+
+    simple_highlight = highlight(source_text, target_text)
+    smart_highlight = highlight(mutated_text, target_text)
+
     title = f"{service_settings.name} {service_settings.version}"
-    maybe_labels = ", ".join(maybe_match.labels) if maybe_match.labels else "null"
+    labels_or_hyphen = ", ".join(maybe_match.labels) if maybe_match.labels else "-"
 
     click.echo(title)
     click.echo("-" * len(title))
@@ -53,10 +69,41 @@ def diff(source: str | PathLike[str], target: str | PathLike[str]) -> None:
     click.echo("Match:")
     click.echo(f"- language:      {maybe_match.language}")
     click.echo(f"- probability:   {maybe_match.probability}")
-    click.echo(f"- labels:        {maybe_labels}")
+    click.echo(f"- labels:        {labels_or_hyphen}")
 
     click.echo()
 
     click.echo("Highlights:")
-    click.echo("- simple:         ...")
-    click.echo("- smart:          ...")
+    click.echo(f"- simple:        {simple_highlight.as_posix()}")
+
+    if maybe_match.labels:
+        click.echo(f"- smart:         {smart_highlight.as_posix()}")
+
+
+def mutate_from_labels(source: str, target: str, labels: str) -> str:
+    """Mutate `source` based on `target` and `labels`."""
+    for mutation in mutations_from_labels(labels):
+        coroutine = mutation.mutate(source, target)
+        source = asyncio.run(coroutine)
+    return source
+
+
+def highlight(source: str, target: str) -> Path:
+    """Highlight the differences and save to a temporary file."""
+    source_lines = source.splitlines(keepends=True)
+    target_lines = target.splitlines(keepends=True)
+
+    differ = HtmlDiff()
+    html = differ.make_file(source_lines, target_lines, fromdesc="Source", todesc="Target")
+
+    fd, path = mkstemp(suffix=".html")
+    os.write(fd, html.encode(ENCODING, ERRORS))
+    os.close(fd)
+
+    return Path(path)
+
+
+def mutations_from_labels(labels: list[str]) -> list[MutationInterface]:
+    """Convert labels to mutations."""
+    factories = [getattr(MutationInterface, label.lower()) for label in labels]
+    return [factory() for factory in factories]
