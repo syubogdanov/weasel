@@ -80,7 +80,7 @@ def diff(source: str | PathLike[str], target: str | PathLike[str]) -> None:
         click.echo(f"- smart:         {smart_highlight.as_posix()}")
 
 
-def mutate_from_labels(source: str, target: str, labels: str) -> str:
+def mutate_from_labels(source: str, target: str, labels: list[str]) -> str:
     """Mutate `source` based on `target` and `labels`."""
     for mutation in mutations_from_labels(labels):
         coroutine = mutation.mutate(source, target)
