@@ -39,6 +39,9 @@ classifiers = [
 ]
 package-mode = false
 
+[tool.poetry.scripts]
+weasel = "weasel.presentation.cli.__main__:main"
+
 [tool.poetry.dependencies]
 aiofiles = "~24.1"
 aiohttp = "~3.11"

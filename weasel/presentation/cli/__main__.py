@@ -7,10 +7,7 @@ from weasel.presentation.cli.scan import scan
 
 @click.group(epilog="MIT License, Copyright (c) 2025 Sergei Y. Bogdanov.")
 def main() -> None:
-    """Hunt plagiarism - line by line, byte by byte.
-
-    ...
-    """
+    """Hunt plagiarism - line by line, byte by byte."""
 
 
 main.add_command(diff)
