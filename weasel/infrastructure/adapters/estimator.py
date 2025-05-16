@@ -3,7 +3,7 @@ import asyncio
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from rapidfuzz.distance.DamerauLevenshtein import normalized_similarity
+from rapidfuzz.distance.Levenshtein import normalized_similarity
 
 from weasel.domain.services.interfaces.estimator import EstimatorInterface
 
@@ -13,8 +13,8 @@ if TYPE_CHECKING:
 
 
 @dataclass
-class DamerauLevenshteinEstimator(EstimatorInterface):
-    """The Damerau-Levenshtein estimator."""
+class EstimatorAdapter(EstimatorInterface):
+    """The estimator adapter."""
 
     _precision: int
 

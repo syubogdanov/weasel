@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 from uuid import UUID, uuid4
 
 from dependency_injector.containers import DeclarativeContainer
-from dependency_injector.providers import Dict, Factory, List, Provider, Selector, Singleton
+from dependency_injector.providers import Dict, Factory, List, Provider, Singleton
 
 from weasel.domain.services.matcher import MatcherService
 from weasel.domain.services.scanner import ScannerService
@@ -11,12 +11,10 @@ from weasel.infrastructure.adapters.api.bitbucket import BitbucketAPIAdapter
 from weasel.infrastructure.adapters.api.github import GitHubAPIAdapter
 from weasel.infrastructure.adapters.cache import CacheAdapter
 from weasel.infrastructure.adapters.cashews.cache import CacheCashewsAdapter
+from weasel.infrastructure.adapters.estimator import EstimatorAdapter
 from weasel.infrastructure.adapters.metrics import MetricsAdapter
 from weasel.infrastructure.adapters.mutation_tree import MutationTreeAdapter
 from weasel.infrastructure.adapters.sealer import SealerAdapter
-from weasel.infrastructure.estimators.damerau_levenshtein import DamerauLevenshteinEstimator
-from weasel.infrastructure.estimators.jaro_winkler import JaroWinklerEstimator
-from weasel.infrastructure.estimators.levenshtein import LevenshteinEstimator
 from weasel.infrastructure.git.bitbucket import BitbucketAdapter
 from weasel.infrastructure.git.github import GitHubAdapter
 from weasel.infrastructure.languages.java import JavaLanguage
@@ -43,7 +41,6 @@ from weasel.infrastructure.mutations.sql import (
 )
 from weasel.infrastructure.mutations.starlark import bzl001, bzl002, bzl003, bzl004, bzl005
 from weasel.settings.cache import CacheSettings
-from weasel.settings.estimator import EstimatorSettings
 from weasel.settings.external_api import ExternalAPISettings
 from weasel.settings.mutation_tree import MutationTreeSettings
 from weasel.settings.retries import RetriesSettings
@@ -68,7 +65,6 @@ class WeaselContainer(DeclarativeContainer):
     cache_settings: Provider["CacheSettings"] = Singleton(
         CacheSettings, directory=service_settings.provided.cache_directory
     )
-    estimator_settings: Provider["EstimatorSettings"] = Singleton(EstimatorSettings)
     external_api_settings: Provider["ExternalAPISettings"] = Singleton(ExternalAPISettings)
     mutation_tree_settings: Provider["MutationTreeSettings"] = Singleton(MutationTreeSettings)
     retries_settings: Provider["RetriesSettings"] = Singleton(RetriesSettings)
@@ -126,21 +122,8 @@ class WeaselContainer(DeclarativeContainer):
         GitHubAdapter, _cache=cache_adapter.provided, _github=github_api_adapter.provided
     )
 
-    damerau_levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
-        DamerauLevenshteinEstimator, _precision=service_settings.provided.precision
-    )
-    jaro_winkler_estimator: Provider["EstimatorInterface"] = Singleton(
-        JaroWinklerEstimator, _precision=service_settings.provided.precision
-    )
-    levenshtein_estimator: Provider["EstimatorInterface"] = Singleton(
-        LevenshteinEstimator, _precision=service_settings.provided.precision
-    )
-
-    estimator: Provider["EstimatorInterface"] = Selector(
-        estimator_settings.provided.type,
-        damerau_levenshtein=damerau_levenshtein_estimator.provided,
-        jaro_winkler=jaro_winkler_estimator.provided,
-        levenshtein=levenshtein_estimator.provided,
+    estimator_adapter: Provider["EstimatorInterface"] = Singleton(
+        EstimatorAdapter, _precision=service_settings.provided.precision
     )
 
     bzl001: Provider["MutationInterface"] = Singleton(bzl001.StarlarkMutation)
@@ -148,7 +131,7 @@ class WeaselContainer(DeclarativeContainer):
     bzl003: Provider["MutationInterface"] = Singleton(bzl003.StarlarkMutation)
     bzl004: Provider["MutationInterface"] = Singleton(bzl004.StarlarkMutation)
     bzl005: Provider["MutationInterface"] = Singleton(
-        bzl005.StarlarkMutation, _estimator=estimator.provided
+        bzl005.StarlarkMutation, _estimator=estimator_adapter.provided
     )
 
     java001: Provider["MutationInterface"] = Singleton(java001.JavaMutation)
@@ -159,7 +142,7 @@ class WeaselContainer(DeclarativeContainer):
     py004: Provider["MutationInterface"] = Singleton(py004.PythonMutation)
     py005: Provider["MutationInterface"] = Singleton(py005.PythonMutation)
     py006: Provider["MutationInterface"] = Singleton(
-        py006.PythonMutation, _estimator=estimator.provided
+        py006.PythonMutation, _estimator=estimator_adapter.provided
     )
 
     sql001: Provider["MutationInterface"] = Singleton(sql001.SQLMutation)
@@ -176,7 +159,7 @@ class WeaselContainer(DeclarativeContainer):
     sql012: Provider["MutationInterface"] = Singleton(sql012.SQLMutation)
     sql013: Provider["MutationInterface"] = Singleton(sql013.SQLMutation)
     sql014: Provider["MutationInterface"] = Singleton(
-        sql014.SQLMutation, _estimator=estimator.provided
+        sql014.SQLMutation, _estimator=estimator_adapter.provided
     )
 
     java_mutations: Provider[list["MutationInterface"]] = List(java001.provided)
@@ -212,7 +195,7 @@ class WeaselContainer(DeclarativeContainer):
         MutationTreeAdapter,
         _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
         _depth=mutation_tree_settings.provided.depth,
-        _estimator=estimator.provided,
+        _estimator=estimator_adapter.provided,
         _mutations=java_mutations.provided,
         _tolerance=mutation_tree_settings.provided.tolerance,
     )
@@ -220,7 +203,7 @@ class WeaselContainer(DeclarativeContainer):
         MutationTreeAdapter,
         _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
         _depth=mutation_tree_settings.provided.depth,
-        _estimator=estimator.provided,
+        _estimator=estimator_adapter.provided,
         _mutations=python_mutations.provided,
         _tolerance=mutation_tree_settings.provided.tolerance,
     )
@@ -228,7 +211,7 @@ class WeaselContainer(DeclarativeContainer):
         MutationTreeAdapter,
         _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
         _depth=mutation_tree_settings.provided.depth,
-        _estimator=estimator.provided,
+        _estimator=estimator_adapter.provided,
         _mutations=sql_mutations.provided,
         _tolerance=mutation_tree_settings.provided.tolerance,
     )
@@ -236,7 +219,7 @@ class WeaselContainer(DeclarativeContainer):
         MutationTreeAdapter,
         _degree_of_freedom=mutation_tree_settings.provided.degree_of_freedom,
         _depth=mutation_tree_settings.provided.depth,
-        _estimator=estimator.provided,
+        _estimator=estimator_adapter.provided,
         _mutations=starlark_mutations.provided,
         _tolerance=mutation_tree_settings.provided.tolerance,
     )
@@ -250,7 +233,7 @@ class WeaselContainer(DeclarativeContainer):
 
     matcher_service: Provider["MatcherService"] = Singleton(
         MatcherService,
-        _estimator=estimator.provided,
+        _estimator=estimator_adapter.provided,
         _languages=languages.provided,
         _mutation_trees=mutation_trees.provided,
     )
