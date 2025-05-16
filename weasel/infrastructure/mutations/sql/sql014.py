@@ -38,8 +38,7 @@ class SQLMutation(MutationInterface):
         * `sqlglot` is written in *Rust*.
         """
         source_expressions, target_expressions = await asyncio.gather(
-            asyncio.to_thread(parse, source),
-            asyncio.to_thread(parse, target),
+            asyncio.to_thread(parse, source), asyncio.to_thread(parse, target)
         )
 
         source_blocks = [expression.sql() for expression in source_expressions if expression]
