@@ -1,4 +1,5 @@
 import asyncio
+import sys
 
 from datetime import UTC, datetime
 from os import PathLike
@@ -77,18 +78,21 @@ def scan(  # noqa: C901, PLR0912, PLR0913, PLR0915
 
     click.echo()
 
-    click.echo("Scan:")
+    click.echo("Start:")
     click.echo(f"- now:      {isoformat()}")
+
+    click.echo()
 
     try:
         coroutine = scanner_service.scan(contest)
         report = asyncio.run(coroutine)
 
-    except Exception as exception:
-        detail = str(exception)
-        raise click.UsageError(detail) from exception
+    except Exception as exception:  # noqa: BLE001
+        click.echo(f"Error: {exception}")
+        sys.exit(1)
 
-    click.echo(f"- done:     {isoformat()}")
+    click.echo("Finish:")
+    click.echo(f"- now:      {isoformat()}")
 
     click.echo()
 
