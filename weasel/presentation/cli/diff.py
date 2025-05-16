@@ -105,5 +105,5 @@ def highlight(source: str, target: str) -> Path:
 
 def mutations_from_labels(labels: list[str]) -> list[MutationInterface]:
     """Convert labels to mutations."""
-    factories = [getattr(MutationInterface, label.lower()) for label in labels]
+    factories = [getattr(WEASEL_CONTAINER, label.lower()) for label in labels]
     return [factory() for factory in factories]
