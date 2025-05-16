@@ -37,7 +37,47 @@ docker build --tag weasel .
 
 ### Usage
 
-...
+#### diff
+
+```bash
+$ weasel diff --help
+Usage: weasel diff [OPTIONS] SOURCE TARGET
+
+  Compare files and highlight differences.
+
+Options:
+  --help  Show this message and exit.
+```
+
+#### info
+
+```bash
+$ weasel info --help
+Usage: weasel info [OPTIONS]
+
+  Show the 'weasel' configuration.
+
+Options:
+  --help  Show this message and exit.
+```
+
+#### scan
+
+```bash
+$ weasel scan --help
+Usage: weasel scan [OPTIONS]
+
+  Scan multiple files or repositories.
+
+Options:
+  --from-json FILE  Load from JSON.
+  --from-toml FILE  Load from TOML.
+  --from-yaml FILE  Load from YAML.
+  --to-json TEXT    Write to JSON.
+  --to-toml TEXT    Write to TOML.
+  --to-yaml TEXT    Write to YAML.
+  --help            Show this message and exit.
+```
 
 ## License
 
