@@ -124,6 +124,6 @@ def scan(  # noqa: C901, PLR0912, PLR0913, PLR0915
         click.echo("The output file(s) could not be written - the backup is provided.")
 
 
-def isoformat() -> datetime:
+def isoformat() -> str:
     """Return the current time in ISO format."""
     return datetime.now(UTC).isoformat(sep=" ", timespec="milliseconds")
