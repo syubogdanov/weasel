@@ -2,14 +2,23 @@ FROM python:3.13-alpine3.21 AS production
 
 WORKDIR /weasel/
 
+RUN apk add --no-cache \
+    build-base \
+    cargo \
+    rust \
+    cmake \
+    musl-dev \
+    libffi-dev \
+    openssl-dev
+
 COPY poetry.lock pyproject.toml ./
 
-RUN python -m pip install --no-cache-dir poetry==2.1.2 \
+RUN python -m pip install --no-cache-dir poetry==2.1.3 \
     && poetry config virtualenvs.create false \
-    && poetry install --no-ansi --no-interaction --no-root
+    && poetry install --no-ansi --no-interaction
 
 COPY ./ ./
 
 FROM production AS testing
 
-RUN poetry install --no-ansi --no-interaction --no-root --with lint,test
+RUN poetry install --no-ansi --no-interaction --with lint,test
