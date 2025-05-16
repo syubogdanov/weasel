@@ -45,6 +45,7 @@ aiohttp = "~3.11"
 aioshutil = "~1.5"
 aiostdlib = "~0.2"
 cashews  = {version="~7.4", extras=["diskcache", "speedup"]}
+click = "~8.2"
 dependency-injector = "~4.46"
 javalang-ext = "~0.14"
 networkx = "~3.4"

@@ -30,6 +30,7 @@
 | [toml][101]                       | [@uiri][102]                          | [GitHub][103]               | [MIT][104]                        |
 | [typeshed][105]                   | [@python][106]                        | [GitHub][107]               | [Apache-2.0][108]                 |
 | [aiofiles][109]                   | [@Tinche][110]                        | [GitHub][111]               | [Apache-2.0][112]                 |
+| [click][113]                      | [@pallets][114]                       | [GitHub][115]               | [BSD-3-Clause][116]               |
 
 [001]: https://www.flaticon.com/free-icon/weasel_334982
 [002]: https://www.flaticon.com/authors/freepik
@@ -170,3 +171,8 @@
 [110]: https://github.com/Tinche
 [111]: https://github.com/
 [112]: https://github.com/Tinche/aiofiles/blob/main/LICENSE
+
+[113]: https://github.com/pallets/click
+[114]: https://github.com/pallets
+[115]: https://github.com/
+[116]: https://github.com/pallets/click/blob/main/LICENSE.txt

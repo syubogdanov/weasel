@@ -4,7 +4,7 @@ from functools import cached_property
 from pathlib import Path
 from typing import Self
 
-from platformdirs import site_cache_dir, site_config_dir, site_data_dir
+from platformdirs import site_cache_dir, site_data_dir
 from pydantic import BaseModel, PositiveInt
 
 
@@ -43,6 +43,10 @@ class PyProject(BaseModel):
 class ServiceSettings(BaseModel):
     """The service settings."""
 
+    # The service name.
+    name: str = "weasel"
+
+    # The 'float' precision.
     precision: PositiveInt = 3
 
     @cached_property
@@ -51,11 +55,6 @@ class ServiceSettings(BaseModel):
         base_dir = Path(__file__).parent.parent.parent
         path = base_dir / "pyproject.toml"
         return PyProject.load(path)
-
-    @property
-    def name(self) -> str:
-        """Get the service name."""
-        return self.pyproject.tool.poetry.name
 
     @property
     def version(self) -> str:
@@ -91,11 +90,6 @@ class ServiceSettings(BaseModel):
     def cache_directory(self) -> Path:
         """Get the cache directory."""
         return Path(site_cache_dir(appname=self.name, version=self.version))
-
-    @cached_property
-    def config_directory(self) -> Path:
-        """Get the config directory."""
-        return Path(site_config_dir(appname=self.name, version=self.version))
 
     @cached_property
     def data_directory(self) -> Path:
