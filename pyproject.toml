@@ -38,7 +38,7 @@ classifiers = [
     "Topic :: Education",
     "Topic :: Utilities",
 ]
-package-mode = false
+package-mode = true
 
 [tool.poetry.scripts]
 weasel = "weasel.presentation.cli.__main__:main"

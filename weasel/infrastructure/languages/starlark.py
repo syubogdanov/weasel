@@ -82,3 +82,26 @@ class StarlarkVisitor(ast.NodeVisitor):
     def visit_YieldFrom(self, _node: ast.YieldFrom) -> None:
         """Visit a `yield from` statement."""
         self._triggered = True
+
+    def visit_AsyncFunctionDef(self, _node: ast.AsyncFunctionDef) -> None:
+        """Visit an asynchronous function."""
+        self._triggered = True
+
+    def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
+        """Visit a synchronous function."""
+        for arg in node.args.args:
+            if arg.annotation is not None:
+                self._triggered = True
+                return
+
+        if node.args.vararg is not None:
+            self._triggered = True
+            return
+
+        if node.args.kwarg is not None:
+            self._triggered = True
+            return
+
+        if node.returns is not None:
+            self._triggered = True
+            return
