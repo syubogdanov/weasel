@@ -159,10 +159,6 @@ reviews:
   - ...
 ```
 
-### Labels
-
-...
-
 ## License
 
 MIT License, Copyright (c) 2025 Sergei Y. Bogdanov. See [LICENSE][github/license] file.
