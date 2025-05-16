@@ -85,11 +85,33 @@ Options:
   --help            Show this message and exit.
 ```
 
-#### Examples
+### Examples
 
-##### scan
+#### diff
 
-Setting up the manifest file:
+Run the command:
+
+```bash
+$ weasel diff ./einstein/einstein.py ./kafka.py
+weasel 0.0.0
+------------
+
+Files:      
+- source:        einstein/einstein.py
+- target:        kafka.py
+
+Match:
+- language:      python
+- probability:   1.0
+- labels:        -
+
+Highlights:
+- simple:        C:/Users/User/AppData/Local/Temp/tmpqt5qh5ih.html
+```
+
+#### scan
+
+Write the manifest:
 
 ```yaml
 tasks:
@@ -110,7 +132,7 @@ tasks:
           branch: dijkstra
 ```
 
-Scan the tasks:
+Run the command:
 
 ```bash
 $ weasel scan --from-yaml=contest.yaml --to-yaml=report.yaml
@@ -139,8 +161,8 @@ reviews:
     - labels: []
       language: python
       probability: 1.0
-      source: dijkstra.py
-      target: dijkstra.py
+      source: einstein.py
+      target: kafka.py
     metrics:
       count: 1
       max: 1.0

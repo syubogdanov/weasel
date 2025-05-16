@@ -42,7 +42,7 @@ def diff(source: str | PathLike[str], target: str | PathLike[str]) -> None:
     maybe_match = asyncio.run(coroutine)
 
     if maybe_match is None:
-        detail = f"'{source}' and '{target}' seem to be different languages..."
+        detail = f"'{source}' and '{target}' seem to be different languages (or empty)..."
         raise click.UsageError(detail)
 
     source_text = source.read_text(encoding=ENCODING, errors=ERRORS)
