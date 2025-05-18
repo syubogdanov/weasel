@@ -11,14 +11,13 @@ RUN apk add --no-cache \
     libffi-dev \
     openssl-dev
 
-COPY poetry.lock pyproject.toml ./
+COPY [ "./", "./" ]
 
 RUN python -m pip install --no-cache-dir poetry==2.1.3 \
     && poetry config virtualenvs.create false \
     && poetry install --no-ansi --no-interaction
 
-COPY ./ ./
+VOLUME [ "/tmp/" ]
 
-FROM production AS testing
-
-RUN poetry install --no-ansi --no-interaction --with lint,test
+ENTRYPOINT [ "poetry", "run", "weasel" ]
+CMD [ "--help" ]
